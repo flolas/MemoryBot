@@ -77,7 +77,7 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
-data = bridge("my-bridge", default="no button is clicked")
+data = stb.bridge("my-bridge", default="no button is clicked")
 
 res = stb.html('''
                 <script>
