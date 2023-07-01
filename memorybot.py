@@ -81,8 +81,31 @@ data = stb.bridge("my-bridge", default="no button is clicked")
 components.html("""
         <script src="https://js.fintoc.com/v1/"></script>
         <script>
+        function waitForElm(selector) {
+            return new Promise(resolve => {
+                if (document.querySelector(selector)) {
+                    return resolve(document.querySelector(selector));
+                }
+
+                const observer = new MutationObserver(mutations => {
+                    if (document.querySelector(selector)) {
+                        resolve(document.querySelector(selector));
+                        observer.disconnect();
+                    }
+                });
+
+                observer.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
+            });
+        }
         window.origin = ''
         window.onload = () => {
+            waitForElm('#fintoc-widget-id').then((elm) => {
+                console.log('Element is ready');
+                elm.src = elm.src.replace("null", "*")
+            });
             const widget = Fintoc.create({
             publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
             holderType: 'individual',
@@ -101,7 +124,9 @@ components.html("""
                 console.log(event);
             },
             });
+            
             widget.open()
+
         };
         </script>""")
 
