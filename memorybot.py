@@ -80,7 +80,10 @@ st.subheader("Conoce cómo están tus finanzas!")
 data = stb.bridge("my-bridge", default="no button is clicked")
 
 res = stb.html('''
-                <script>
+                <button onClick="stBridges.send('my-bridge', 'button 1 is clicked')">Button 1</button>
+    ''')
+    '''
+                    <script>
                 if (document.readyState !== 'loading') {
                     console.log('document is already ready, just execute code here');
                     initFintoc();
@@ -136,8 +139,7 @@ res = stb.html('''
                         });
                     }
                 </script>
-                <button onClick="stBridges.send('my-bridge', 'button 1 is clicked')">Button 1</button>
-    ''')
+                '''
 st.write(data)
 
 # Carga Widget Fintoc
