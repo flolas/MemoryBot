@@ -90,7 +90,7 @@ if modal.is_open():
         <script src="https://js.fintoc.com/v1/"></script>
         <script>
         window.onload = () => {
-            window.location.search = '?parent=https://memorybot-ok4g2imu2jf.streamlit.app'
+            window.location.search = '?parent=*'
             const widget = Fintoc.create({
             publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
             holderType: 'individual',
