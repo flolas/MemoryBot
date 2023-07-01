@@ -95,6 +95,7 @@ res = stb.html('''
                     }
                 });
                 }
+                console.log("Loading...")
                 loadScript('https://js.fintoc.com/v1/').then(function(){
                     console.log("Loading fintoc widget")
                     window.widget = Fintoc.create({
