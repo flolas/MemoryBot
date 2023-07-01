@@ -77,6 +77,7 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 res = stb.html('''
+                <script src="https://js.fintoc.com/v1/"></script>
                 <script>
                 function loadScript(src) {
                 return new Promise(function (resolve, reject) {
