@@ -96,7 +96,7 @@ if data:
         }
 st.write('---')
 st.subheader('Cuentas Conectadas')
-col1, col2 = st.columns([4, 1])
+col1, col2, col3= st.columns([1, 2 ,1])
 if len(st.session_state["fintoc_links"]) > 0:
     for link in st.session_state["fintoc_links"].values():
         with col1:
