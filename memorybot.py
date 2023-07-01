@@ -80,9 +80,9 @@ st.subheader("Conoce cómo están tus finanzas!")
 data = stb.bridge("my-bridge", default="no button is clicked")
 
 stb.html("""
-<button onClick="stBridges.send('my-bridge', 'button 1 is clicked')">Button 1</button>
-<button onClick="stBridges.send('my-bridge', 'button 2 is clicked')">Button 2</button>
-<button onClick="stBridges.send('my-bridge', 'button 3 is clicked')">Button 3</button>
+<button onClick="window.top.stBridges.send('my-bridge', 'button 1 is clicked')">Button 1</button>
+<button onClick="window.top.stBridges.send('my-bridge', 'button 2 is clicked')">Button 2</button>
+<button onClick="window.top.stBridges.send('my-bridge', 'button 3 is clicked')">Button 3</button>
 """)
 
 st.write(data)
