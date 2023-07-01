@@ -81,7 +81,7 @@ data = stb.bridge("my-bridge", default="no button is clicked")
 components.html("""
 <script type="text/javascript">
 console.log("Loaded Script")
-window.fintoc_widget = function(){
+window.top.fintoc_widget = function(){
     console.log("Click")
 }
 </script>
