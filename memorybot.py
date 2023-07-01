@@ -9,6 +9,7 @@ The code creates a web application using Streamlit, a Python library for buildin
 import streamlit as st
 from streamlit_modal import Modal
 import streamlit.components.v1 as components
+import uuid
 
 from langchain.chains import ConversationChain
 from langchain.chains.conversation.memory import ConversationEntityMemory
@@ -74,7 +75,23 @@ st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
 # Carga Widget Fintoc
-components.html('''<script src="https://js.fintoc.com/v1/"></script>''')
+
+def javascript(source: str) -> None:
+    div_id = uuid.uuid4()
+
+    st.markdown(f"""
+    <div style="display:none" id="{div_id}">
+        <iframe src="javascript: \
+            var script = document.createElement('script'); \
+            script.type = 'text/javascript'; \
+            script.text = {html.escape(repr(source))}; \
+            var div = window.parent.document.getElementById('{div_id}'); \
+            div.appendChild(script); \
+            div.parentElement.parentElement.parentElement.style.display = 'none'; \
+        "/>
+    </div>
+    """, unsafe_allow_html=True)
+javascript("https://js.fintoc.com/v1/")
 
 modal = Modal("Demo Modal", "key")
 
