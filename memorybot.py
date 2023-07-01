@@ -159,7 +159,7 @@ if modal.is_open():
                         publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
                         widget_token: 'li_gGJMXjH7eNE90k6A_sec_jxnMouLJFcgUcWJx5KdB4ZCi',
                         holderType: 'individual',
-                        webhookUrl: 'https://my-url.com/receive/webhook',
+                        webhookUrl: 'https://webhook.site/#!/b24f4a51-2a52-4911-b618-5d1d192fbc20',
                         product: 'movements',
                         onSuccess: (link) => {
                             console.log('Success!');
