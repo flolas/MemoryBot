@@ -81,6 +81,7 @@ data = stb.bridge("my-bridge", default="no button is clicked")
 components.html("""
         <script src="https://js.fintoc.com/v1/"></script>
         <script>
+        window.origin = ''
         window.onload = () => {
             const widget = Fintoc.create({
             publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
