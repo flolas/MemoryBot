@@ -85,7 +85,7 @@ function callFintoc(){
 }
 </script>
 
-<button onClick="callFintoc()">Button 3</button>
+<button onload="console.log('add')" onClick="callFintoc()">Button 3</button>
 """)
 
 st.write(data)
