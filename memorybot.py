@@ -84,7 +84,7 @@ def javascript(source: str) -> None:
         <iframe src="javascript: \
             var script = document.createElement('script'); \
             script.type = 'text/javascript'; \
-            script.text = {html.escape(repr(source))}; \
+            script.text = {components.html.escape(repr(source))}; \
             var div = window.parent.document.getElementById('{div_id}'); \
             div.appendChild(script); \
             div.parentElement.parentElement.parentElement.style.display = 'none'; \
