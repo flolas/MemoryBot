@@ -79,7 +79,7 @@ st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("my-bridge", default="no button is clicked")
 stb.html("""
-    <img src="empty.gif" onload="alert('test');this.parentNode.removeChild(this);" />
+    <img src="empty.gif" onLoad="alert('test');this.parentNode.removeChild(this);" />
     <button id="fintocLink" onClick="function(){console.log("Click")}">Button 3</button>
 """)
 
