@@ -79,7 +79,7 @@ st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("my-bridge", default="no button is clicked")
 stb.html("""
-
+<button id="fintocLink">Button 3</button>
 <script type="text/javascript">
     var myLink = document.getElementById('fintocLink');
 
@@ -92,8 +92,6 @@ stb.html("""
         return false;
     }
 </script>
-
-<button id="fintocLink" onClick="callFintoc()">Button 3</button>
 """)
 
 st.write(data)
