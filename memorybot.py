@@ -100,8 +100,11 @@ col1, col2 = st.columns([4, 1])
 if len(st.session_state["fintoc_links"]) > 0:
     for link in st.session_state["fintoc_links"].values():
         with col1:
-            st.write(f'[✅] 🏦 {link["bank"]}({link["user"]})') 
+            st.write(f'[✅]') 
         with col2:
+            st.write(f'🏦 Banco: {link["bank"]}') 
+            st.write(f'👤 Usuario:{link["bank"]}') 
+        with col3:
             st.button('Eliminar ❌', type = 'secondary', use_container_width=False)
         st.write('---')
 
