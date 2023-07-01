@@ -84,6 +84,11 @@ stb.html("""
 <button onClick="window.top.stBridges.send('my-bridge', 'button 2 is clicked')">Button 2</button>
 <button onClick="window.top.stBridges.send('my-bridge', 'button 3 is clicked')">Button 3</button>
 """)
+components.html("""
+<button onClick="window.stBridges.send('my-bridge', 'button 4 is clicked')">Button 4</button>
+<button onClick="window.stBridges.send('my-bridge', 'button 5 is clicked')">Button 5</button>
+<button onClick="window.stBridges.send('my-bridge', 'button 6 is clicked')">Button 6</button>
+""")
 
 st.write(data)
 
