@@ -8,6 +8,7 @@ The code creates a web application using Streamlit, a Python library for buildin
 # Import necessary libraries
 import streamlit as st
 import html
+import time
 
 from streamlit_modal import Modal
 import st_bridge as stb
