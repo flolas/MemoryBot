@@ -137,7 +137,7 @@ res = stb.html('''
                     }
                 </script>
     ''')
-    st.write(data)
+st.write(data)
 
 # Carga Widget Fintoc
 
