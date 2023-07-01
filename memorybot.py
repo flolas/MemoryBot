@@ -85,20 +85,27 @@ if open_modal:
 if modal.is_open():
     with modal.container():
         components.html('''
-            <script>
-            window.fintocWidget = Fintoc.create({
-            holderType,
-            product,
-            publicKey,
-            webhookUrl,
-            country,
-            institutionId,
-            username,
-            onSuccess,
-            onExit,
-            onEvent,
-            })
-            </script>
+        <script>
+        window.onload = () => {
+            const widget = Fintoc.create({
+            publicKey: 'FINTOC_PUBLIC_KEY',
+            holderType: 'individual',
+            product: 'movements',
+            webhookUrl: 'https://my-url.com/receive/webhook',
+            onSuccess: (link) => {
+                console.log('Success!');
+                console.log(link);
+            },
+            onExit: () => {
+                console.log('Widget closing!');
+            },
+            onEvent: (event) => {
+                console.log('An event just happened!');
+                console.log(event);
+            },
+            });
+        };
+        </script>
         ''')
 
 # Ask the user to enter their OpenAI API key
