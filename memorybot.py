@@ -79,8 +79,6 @@ st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("my-bridge", default="no button is clicked")
 
-components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
-
 st.write(data)
 
 # Carga Widget Fintoc
@@ -93,8 +91,7 @@ if open_modal:
 
 if modal.is_open():
     with modal.container():
-        #res = components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
-        pass
+        components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
 
 # Ask the user to enter their OpenAI API key
 API_O = st.sidebar.text_input("API-KEY", type="password")
