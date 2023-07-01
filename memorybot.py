@@ -88,6 +88,7 @@ if modal.is_open():
     with modal.container():
         components.html('''
         <script src="https://js.fintoc.com/v1/"></script>
+        
         <script>
         window.onload = () => {
             const widget = Fintoc.create({
