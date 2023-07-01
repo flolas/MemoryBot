@@ -81,16 +81,7 @@ data = stb.bridge("my-bridge", default="no button is clicked")
 stb.html("""
 <button id="fintocLink">Button 3</button>
 <script type="text/javascript">
-    var myLink = document.getElementById('fintocLink');
-
-    myLink.onclick = function(){
-
-        var script = document.createElement("script");
-        script.type = "text/javascript";
-        script.src = "https://js.fintoc.com/v1/"; 
-        document.getElementsByTagName("head")[0].appendChild(script);
-        return false;
-    }
+console.log("executed")
 </script>
 """)
 
