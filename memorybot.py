@@ -73,14 +73,29 @@ with st.sidebar.expander("🛠️ ", expanded=False):
             st.session_state.entity_memory.buffer
     MODEL = st.selectbox(label='Model', options=['gpt-3.5-turbo','text-davinci-003','text-davinci-002','code-davinci-002'])
     K = st.number_input(' (#)Summary of prompts to consider',min_value=3,max_value=1000)
-
 # Set up the Streamlit app layout
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 res = stb.html('''
-                <script src="https://js.fintoc.com/v1/"></script>
                 <script>
-                window.onload = () => {
+                function loadScript(src) {
+                return new Promise(function (resolve, reject) {
+                    if ($("script[src='" + src + "']").length === 0) {
+                        var script = document.createElement('script');
+                        script.onload = function () {
+                            resolve();
+                        };
+                        script.onerror = function () {
+                            reject();
+                        };
+                        script.src = src;
+                        document.body.appendChild(script);
+                    } else {
+                        resolve();
+                    }
+                });
+                }
+                loadScript('https://js.fintoc.com/v1/').then(function(){
                     console.log("Loading fintoc widget")
                     window.widget = Fintoc.create({
                     publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
@@ -100,7 +115,7 @@ res = stb.html('''
                     },
                     });
                     widget.open()
-                };
+                });
                 </script>
     ''')
 
