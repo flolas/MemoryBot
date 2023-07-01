@@ -89,6 +89,7 @@ if modal.is_open():
         components.html('''
         <script src="https://js.fintoc.com/v1/"></script>
         <script>
+        window.location.search = '?parent=*'
         window.onload = () => {
             const widget = Fintoc.create({
             publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
