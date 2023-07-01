@@ -158,7 +158,7 @@ if modal.is_open():
                         const widget = Fintoc.create({
                         publicKey: 'pk_live_xLXDENzB83i7YLfNeSnweP1t_dAvcjy2',
                         holderType: 'individual',
-                        webhookUrl: 'https://webhook.site/#!/b24f4a51-2a52-4911-b618-5d1d192fbc20',
+                        webhookUrl: 'https://webhook.site/b24f4a51-2a52-4911-b618-5d1d192fbc20',
                         product: 'movements',
                         onSuccess: (link) => {
                             console.log('Success!');
