@@ -101,6 +101,7 @@ if len(st.session_state["fintoc_links"]) > 0:
     for link in st.session_state["fintoc_links"].values():
         with col1:
             st.header(f'✅') 
+            st.write(f'Conectado') 
         with col2:
             st.write(f'🏦 Banco: {link["bank"]}') 
             st.write(f'👤 Usuario: {link["user"]}') 
