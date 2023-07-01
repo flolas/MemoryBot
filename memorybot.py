@@ -93,7 +93,7 @@ if data:
 st.subheader('Cuentas Conectadas')
 if len(st.session_state["fintoc_links"]) > 0:
     for link in st.session_state["fintoc_links"].values():
-        st.write(f'{link["bank"]}(link["user"]})')
+        st.write(f'{link["bank"]}({link["user"]})')
 else:
     st.write("No tienes ninguna cuenta conectada.")
 
