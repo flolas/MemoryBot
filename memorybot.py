@@ -96,9 +96,15 @@ if data:
         }
 st.write('---')
 st.subheader('Cuentas Conectadas')
+col1, col2 = st.columns([4, 1])
 if len(st.session_state["fintoc_links"]) > 0:
     for link in st.session_state["fintoc_links"].values():
-        st.write(f'{link["bank"]}({link["user"]})')
+        with col1:
+            st.write(f'{link["bank"]}({link["user"]})') 
+        with col2:
+            st.button('❌', key=None, help=None, on_click=None, args=None, kwargs=None, *, type="secondary", disabled=False, use_container_width=True)
+
+
 else:
     st.write("No tienes ninguna cuenta conectada.")
 
