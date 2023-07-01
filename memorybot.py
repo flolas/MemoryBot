@@ -74,27 +74,14 @@ st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
 modal = Modal("Demo Modal", "key")
-open_modal = st.button("Open")
+open_modal = st.button("Obtener movimientos de mis bancos")
 if open_modal:
     modal.open()
 
 if modal.is_open():
     with modal.container():
-        st.write("Text goes here")
-
-        html_string = '''
-        <h1>HTML string in RED</h1>
-
-        <script language="javascript">
-          document.querySelector("h1").style.color = "red";
-        </script>
-        '''
+        html_string = '''<script src="https://js.fintoc.com/v1/"></script>'''
         components.html(html_string)
-
-        st.write("Some fancy text")
-        value = st.checkbox("Check me")
-        st.write(f"Checkbox checked: {value}")
-
 
 # Ask the user to enter their OpenAI API key
 API_O = st.sidebar.text_input("API-KEY", type="password")
