@@ -88,6 +88,7 @@ if modal.is_open():
     with modal.container():
         components.iframe("https://fintoc.tiiny.site?parent=*")
 
+
 # Ask the user to enter their OpenAI API key
 API_O = st.sidebar.text_input("API-KEY", type="password")
 
