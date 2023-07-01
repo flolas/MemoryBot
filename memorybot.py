@@ -112,7 +112,7 @@ if len(st.session_state["fintoc_links"]) > 0:
 else:
     st.write("No tienes ninguna cuenta conectada.")
 
-st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrive_data())
+st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrive_data)
 
 def retrieve_data():
     with st.spinner('Obteniendo movimientos...'):
