@@ -112,12 +112,12 @@ if len(st.session_state["fintoc_links"]) > 0:
 else:
     st.write("No tienes ninguna cuenta conectada.")
 
-st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrive_data)
-
 def retrieve_data():
     with st.spinner('Obteniendo movimientos...'):
         time.sleep(5)
     st.success('Done!')
+    
+st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrive_data)
 
 # Carga Widget Fintoc
 modal = Modal("", "fintoc-modal")
