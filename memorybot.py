@@ -77,19 +77,7 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 # Set up the Streamlit app layout
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
-
-# Carga Widget Fintoc
-
-modal = Modal("", "fintoc-modal")
-
-open_modal = st.button("Obtener movimientos de mis bancos")
-if open_modal:
-    modal.open()
-
-if modal.is_open():
-    with modal.container():
-        #res = components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
-        res = stb.html('''
+res = stb.html('''
                     <script src="https://js.fintoc.com/v1/"></script>
                     <script>
                     window.onload = () => {
@@ -115,6 +103,18 @@ if modal.is_open():
                     };
                     </script>
         ''')
+
+# Carga Widget Fintoc
+
+modal = Modal("", "fintoc-modal")
+
+open_modal = st.button("Obtener movimientos de mis bancos")
+if open_modal:
+    modal.open()
+
+if modal.is_open():
+    with modal.container():
+        #res = components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
 
 # Ask the user to enter their OpenAI API key
 API_O = st.sidebar.text_input("API-KEY", type="password")
