@@ -10,6 +10,8 @@ import streamlit as st
 import html
 
 from streamlit_modal import Modal
+import st_bridge as stb
+
 import streamlit.components.v1 as components
 import uuid
 
@@ -86,11 +88,8 @@ if open_modal:
 
 if modal.is_open():
     with modal.container():
-        res = components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
-        print("asd")
-        print(res)
-        print("asd2")
-
+        #res = components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
+         res = st_bridge.html("https://fintoc.tiiny.site?parent=*", iframe = True)
 
 # Ask the user to enter their OpenAI API key
 API_O = st.sidebar.text_input("API-KEY", type="password")
