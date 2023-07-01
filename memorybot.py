@@ -103,7 +103,7 @@ components.html("""
         window.origin = ''
         window.onload = () => {
             waitForElm('#fintoc-widget-id').then((elm) => {
-                console.log('Element is ready');
+                console.log('Fintoc iframe loaded!');
                 elm.src = elm.src.replace("null", "*")
             });
             const widget = Fintoc.create({
