@@ -33,7 +33,7 @@ if "input" not in st.session_state:
 if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
 if "fintoc_links" not in st.session_state:
-    st.session_state["fintoc_links"] = []
+    st.session_state["fintoc_links"] = {}
 
 # Define function to get user input
 def get_text():
@@ -81,12 +81,13 @@ st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("fintoc-bridge")
-st.session_state["fintoc_links"].append(data)
+if data['id'] not in st.session_state["fintoc_links"]:
+    st.session_state["fintoc_links"][data['id']] = {
+        "bank": data['institucion']['name'],
+        "user": data['username']
+    }
 
 st.session_state["fintoc_links"]
-
-st.write("----")
-st.write(data)
 
 
 # Carga Widget Fintoc
