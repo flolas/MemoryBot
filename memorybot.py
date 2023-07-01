@@ -102,7 +102,7 @@ if len(st.session_state["fintoc_links"]) > 0:
         with col1:
             st.write(f'[✅] 🏦 {link["bank"]}({link["user"]})') 
         with col2:
-            st.button('Eliminar ❌', use_container_width=True)
+            st.button('Eliminar ❌', type = 'secondary', use_container_width=False)
 
 
 else:
