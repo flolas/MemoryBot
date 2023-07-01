@@ -88,8 +88,8 @@ if modal.is_open():
     with modal.container():
         components.html('''
         <script src="https://js.fintoc.com/v1/"></script>
-        
         <script>
+        window.history.replaceState(null, null, "?parent=*")
         window.onload = () => {
             const widget = Fintoc.create({
             publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
