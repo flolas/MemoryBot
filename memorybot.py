@@ -149,7 +149,7 @@ if modal.is_open():
                         widget.open()
 
                     };
-                    </script>""")
+                    </script>""", height = 750)
 
 
 # Ask the user to enter their OpenAI API key
