@@ -78,7 +78,15 @@ st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("my-bridge", default="no button is clicked")
-stb.html("""<button onClick="stBridges.send('my-bridge', 'button 3 is clicked')">Button 3</button>)""")
+stb.html("""
+<script>
+function callFintoc(){
+    window.parent.stBridges.send('my-bridge', 'button 3 is clicked')
+}
+</script>
+
+<button onClick="callFintoc()">Button 3</button>)
+""")
 
 st.write(data)
 
