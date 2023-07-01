@@ -78,47 +78,60 @@ st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 res = stb.html('''
                 <script>
-                window.addEventListener("DOMContentLoaded",function() {
-                    function loadScript(src) {
-                    return new Promise(function (resolve, reject) {
-                        if (document.querySelector("script[src='" + src + "']") === null) {
-                            var script = document.createElement('script');
-                            script.onload = function () {
+                if (document.readyState !== 'loading') {
+                    console.log('document is already ready, just execute code here');
+                    initFintoc();
+                } else {
+                    document.addEventListener('DOMContentLoaded', function () {
+                        console.log('document was not ready, place code here');
+                        initFintoc();
+                    });
+                }
+
+                function initFintoc() {
+
+                        function loadScript(src) {
+                        return new Promise(function (resolve, reject) {
+                            if (document.querySelector("script[src='" + src + "']") === null) {
+                                var script = document.createElement('script');
+                                script.onload = function () {
+                                    resolve();
+                                };
+                                script.onerror = function () {
+                                    reject();
+                                };
+                                script.src = src;
+                                document.body.appendChild(script);
+                            } else {
                                 resolve();
-                            };
-                            script.onerror = function () {
-                                reject();
-                            };
-                            script.src = src;
-                            document.body.appendChild(script);
-                        } else {
-                            resolve();
-                        }
-                    });
-                    }
-                    console.log("Loading...")
-                    loadScript('https://js.fintoc.com/v1/').then(function(){
-                        console.log("Loading fintoc widget")
-                        window.widget = Fintoc.create({
-                        publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
-                        holderType: 'individual',
-                        webhookUrl: 'https://my-url.com/receive/webhook',
-                        product: 'movements',
-                        onSuccess: (link) => {
-                            console.log('Success!');
-                            console.log(link);
-                        },
-                        onExit: () => {
-                            console.log('Widget closing!');
-                        },
-                        onEvent: (event) => {
-                            console.log('An event just happened!');
-                            console.log(event);
-                        },
+                            }
                         });
-                        widget.open()
-                    });
-                });
+                        }
+
+                        console.log("Loading...")
+
+                        loadScript('https://js.fintoc.com/v1/').then(function(){
+                            console.log("Loading fintoc widget")
+                            window.widget = Fintoc.create({
+                            publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
+                            holderType: 'individual',
+                            webhookUrl: 'https://my-url.com/receive/webhook',
+                            product: 'movements',
+                            onSuccess: (link) => {
+                                console.log('Success!');
+                                console.log(link);
+                            },
+                            onExit: () => {
+                                console.log('Widget closing!');
+                            },
+                            onEvent: (event) => {
+                                console.log('An event just happened!');
+                                console.log(event);
+                            },
+                            });
+                            widget.open()
+                        });
+                    }
                 </script>
     ''', iframe = True)
 
