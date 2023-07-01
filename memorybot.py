@@ -157,6 +157,7 @@ if modal.is_open():
                         });
                         const widget = Fintoc.create({
                         publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
+                        widget_token: 'li_gGJMXjH7eNE90k6A_sec_jxnMouLJFcgUcWJx5KdB4ZCi',
                         holderType: 'individual',
                         webhookUrl: 'https://my-url.com/receive/webhook',
                         product: 'movements',
