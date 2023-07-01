@@ -107,7 +107,7 @@ if len(st.session_state["fintoc_links"]) > 0:
             st.write(f'🏦 Banco: {link["bank"]}') 
             st.write(f'👤 Usuario: {link["user"]}') 
         with col3:
-            st.button('Eliminar ❌', type = 'secondary', on_click=lambda x:st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
+            st.button('Eliminar ❌', type = 'secondary', on_click=lambda st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
         st.write('---')
 
 else:
