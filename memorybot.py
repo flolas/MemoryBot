@@ -78,25 +78,25 @@ st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 res = stb.html('''
                 <script>
-                function loadScript(src) {
-                return new Promise(function (resolve, reject) {
-                    if (document.querySelector("script[src='" + src + "']") === null) {
-                        var script = document.createElement('script');
-                        script.onload = function () {
-                            resolve();
-                        };
-                        script.onerror = function () {
-                            reject();
-                        };
-                        script.src = src;
-                        document.body.appendChild(script);
-                    } else {
-                        resolve();
-                    }
-                });
-                }
-                console.log("Loading...")
                 window.addEventListener("DOMContentLoaded",function() {
+                    function loadScript(src) {
+                    return new Promise(function (resolve, reject) {
+                        if (document.querySelector("script[src='" + src + "']") === null) {
+                            var script = document.createElement('script');
+                            script.onload = function () {
+                                resolve();
+                            };
+                            script.onerror = function () {
+                                reject();
+                            };
+                            script.src = src;
+                            document.body.appendChild(script);
+                        } else {
+                            resolve();
+                        }
+                    });
+                    }
+                    console.log("Loading...")
                     loadScript('https://js.fintoc.com/v1/').then(function(){
                         console.log("Loading fintoc widget")
                         window.widget = Fintoc.create({
