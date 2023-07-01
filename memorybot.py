@@ -78,7 +78,7 @@ st.subheader("Conoce cómo están tus finanzas!")
 
 # Carga Widget Fintoc
 
-modal = Modal("Demo Modal", "key")
+modal = Modal("", "fintoc-modal")
 
 open_modal = st.button("Obtener movimientos de mis bancos")
 if open_modal:
@@ -86,7 +86,7 @@ if open_modal:
 
 if modal.is_open():
     with modal.container():
-        components.iframe("https://fintoc.tiiny.site?parent=*")
+        components.iframe("https://fintoc.tiiny.site?parent=*", height = 600)
 
 
 # Ask the user to enter their OpenAI API key
