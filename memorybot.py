@@ -89,7 +89,7 @@ if data:
             "bank": data['institution']['name'],
             "user": data['username'],
         }
-for 
+
 st.subheader('Cuentas Conectadas')
 if len(st.session_state["fintoc_links"]) > 0:
     for link in st.session_state["fintoc_links"].values():
