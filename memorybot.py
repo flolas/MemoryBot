@@ -76,6 +76,9 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 # Set up the Streamlit app layout
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
+
+data = bridge("my-bridge", default="no button is clicked")
+
 res = stb.html('''
                 <script>
                 if (document.readyState !== 'loading') {
@@ -134,6 +137,7 @@ res = stb.html('''
                     }
                 </script>
     ''')
+    st.write(data)
 
 # Carga Widget Fintoc
 
