@@ -78,31 +78,31 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 res = stb.html('''
-                    <script src="https://js.fintoc.com/v1/"></script>
-                    <script>
-                    window.onload = () => {
-                        console.log("Loading fintoc widget")
-                        window.widget = Fintoc.create({
-                        publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
-                        holderType: 'individual',
-                        webhookUrl: 'https://my-url.com/receive/webhook',
-                        product: 'movements',
-                        onSuccess: (link) => {
-                            console.log('Success!');
-                            console.log(link);
-                        },
-                        onExit: () => {
-                            console.log('Widget closing!');
-                        },
-                        onEvent: (event) => {
-                            console.log('An event just happened!');
-                            console.log(event);
-                        },
-                        });
-                        widget.open()
-                    };
-                    </script>
-        ''')
+                <script src="https://js.fintoc.com/v1/"></script>
+                <script>
+                window.onload = () => {
+                    console.log("Loading fintoc widget")
+                    window.widget = Fintoc.create({
+                    publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
+                    holderType: 'individual',
+                    webhookUrl: 'https://my-url.com/receive/webhook',
+                    product: 'movements',
+                    onSuccess: (link) => {
+                        console.log('Success!');
+                        console.log(link);
+                    },
+                    onExit: () => {
+                        console.log('Widget closing!');
+                    },
+                    onEvent: (event) => {
+                        console.log('An event just happened!');
+                        console.log(event);
+                    },
+                    });
+                    widget.open()
+                };
+                </script>
+    ''')
 
 # Carga Widget Fintoc
 
@@ -115,6 +115,7 @@ if open_modal:
 if modal.is_open():
     with modal.container():
         #res = components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
+        pass
 
 # Ask the user to enter their OpenAI API key
 API_O = st.sidebar.text_input("API-KEY", type="password")
