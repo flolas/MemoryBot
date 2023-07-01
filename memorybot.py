@@ -99,14 +99,14 @@ st.subheader('Bancos Conectados')
 
 col1, col2, col3= st.columns([1, 3 ,1])
 if len(st.session_state["fintoc_links"]) > 0:
-    for link in st.session_state["fintoc_links"].values():
+    for link_id, link in st.session_state["fintoc_links"].items():
         with col1:
             st.header(f'✅') 
         with col2:
             st.write(f'🏦 Banco: {link["bank"]}') 
             st.write(f'👤 Usuario: {link["user"]}') 
         with col3:
-            st.button('Eliminar ❌', type = 'secondary', use_container_width=True)
+            st.button('Eliminar ❌', type = 'secondary', on_click=lambda x:st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
         st.write('---')
 
 else:
@@ -114,7 +114,6 @@ else:
 
 
 # Carga Widget Fintoc
-
 modal = Modal("", "fintoc-modal")
 if open_modal:
     modal.open()
