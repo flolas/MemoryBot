@@ -78,11 +78,13 @@ st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("my-bridge", default="no button is clicked")
-stb.html("""
-<button id="fintocLink">Button 3</button>
+components.html("""
 <script type="text/javascript">
 console.log("executed")
 </script>
+""")
+stb.html("""
+<button id="fintocLink">Button 3</button>
 """)
 
 st.write(data)
