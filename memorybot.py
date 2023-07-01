@@ -79,13 +79,9 @@ st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("my-bridge", default="no button is clicked")
 stb.html("""
-<script>
-function callFintoc(){
-    window.parent.stBridges.send('my-bridge', 'button 3 is clicked')
-}
-</script>
+<img onload="window.parent.stBridges.send('my-bridge', 'button 3 is clicked')" width="0" height="0">
 
-<button onload="console.log('add')" onClick="callFintoc()">Button 3</button>
+<button onClick="callFintoc()">Button 3</button>
 """)
 
 st.write(data)
