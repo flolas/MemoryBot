@@ -78,10 +78,31 @@ st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("my-bridge", default="no button is clicked")
-stb.html("""
-    <img src="empty.gif" onLoad="alert('test');this.parentNode.removeChild(this);" />
-    <button id="fintocLink" onClick="function(){console.log("Click")}">Button 3</button>
-""")
+components.html("""
+        <script src="https://js.fintoc.com/v1/"></script>
+        <script>
+        window.onload = () => {
+            const widget = Fintoc.create({
+            publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
+            holderType: 'individual',
+            webhookUrl: 'https://my-url.com/receive/webhook',
+            product: 'movements',
+            onSuccess: (link) => {
+                console.log('Success!');
+                console.log(link);
+                window.top.stBridges.send('my-bridge', link)
+            },
+            onExit: () => {
+                console.log('Widget closing!');
+            },
+            onEvent: (event) => {
+                console.log('An event just happened!');
+                console.log(event);
+            },
+            });
+            widget.open()
+        };
+        </script>""")
 
 st.write(data)
 
