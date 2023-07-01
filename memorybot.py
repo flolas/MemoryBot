@@ -95,12 +95,12 @@ if data:
             "user": data['username'],
         }
 st.write('---')
-st.subheader('Cuentas Conectadas')
+st.subheader('Bancos Conectadas')
 col1, col2, col3= st.columns([1, 2 ,1])
 if len(st.session_state["fintoc_links"]) > 0:
     for link in st.session_state["fintoc_links"].values():
         with col1:
-            st.write(f'[✅]') 
+            st.header(f'✅') 
         with col2:
             st.write(f'🏦 Banco: {link["bank"]}') 
             st.write(f'👤 Usuario: {link["user"]}') 
