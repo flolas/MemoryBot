@@ -120,7 +120,7 @@ res = stb.html('''
                     });
                 });
                 </script>
-    ''')
+    ''', iframe = True)
 
 # Carga Widget Fintoc
 
