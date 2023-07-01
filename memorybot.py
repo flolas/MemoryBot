@@ -117,7 +117,7 @@ def retrieve_data():
         time.sleep(5)
     st.success('Done!')
 
-st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrive_data)
+st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
 
 # Carga Widget Fintoc
 modal = Modal("", "fintoc-modal")
