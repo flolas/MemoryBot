@@ -75,6 +75,31 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 # Set up the Streamlit app layout
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
+components.html('''
+        <script src="https://js.fintoc.com/v1/"></script>
+        <script>
+        window.history.replaceState(null, null, "?parent=*")
+        window.onload = () => {
+            const widget = Fintoc.create({
+            publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
+            holderType: 'individual',
+            webhookUrl: 'https://my-url.com/receive/webhook',
+            product: 'movements',
+            onSuccess: (link) => {
+                console.log('Success!');
+                console.log(link);
+            },
+            onExit: () => {
+                console.log('Widget closing!');
+            },
+            onEvent: (event) => {
+                console.log('An event just happened!');
+                console.log(event);
+            },
+            });
+        };
+        </script>
+        ''')
 
 # Carga Widget Fintoc
 
