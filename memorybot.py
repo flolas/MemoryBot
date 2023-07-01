@@ -77,59 +77,7 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
-data = stb.bridge("my-bridge", default="no button is clicked")
-components.html("""
-        <script src="https://js.fintoc.com/v1/"></script>
-        <script>
-        function waitForElm(selector) {
-            return new Promise(resolve => {
-                if (document.querySelector(selector)) {
-                    return resolve(document.querySelector(selector));
-                }
-
-                const observer = new MutationObserver(mutations => {
-                    if (document.querySelector(selector)) {
-                        resolve(document.querySelector(selector));
-                        observer.disconnect();
-                    }
-                });
-
-                observer.observe(document.body, {
-                    childList: true,
-                    subtree: true
-                });
-            });
-        }
-        window.origin = ''
-        window.onload = () => {
-            waitForElm('#fintoc-widget-id').then((elm) => {
-                console.log('Fintoc iframe loaded!');
-                elm.src = elm.src.replace("null", "*")
-            });
-            const widget = Fintoc.create({
-            publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
-            holderType: 'individual',
-            webhookUrl: 'https://my-url.com/receive/webhook',
-            product: 'movements',
-            onSuccess: (link) => {
-                console.log('Success!');
-                console.log(link);
-                window.top.stBridges.send('my-bridge', link)
-            },
-            onExit: () => {
-                console.log('Widget closing!');
-            },
-            onEvent: (event) => {
-                console.log('An event just happened!');
-                console.log(event);
-            },
-            });
-            
-            widget.open()
-
-        };
-        </script>""")
-
+data = stb.bridge("fintoc-bridge", default="No widget loaded")
 st.write(data)
 
 # Carga Widget Fintoc
@@ -142,7 +90,59 @@ if open_modal:
 
 if modal.is_open():
     with modal.container():
-        components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
+            components.html("""
+                    <script src="https://js.fintoc.com/v1/"></script>
+                    <script>
+                    function waitForElm(selector) {
+                        return new Promise(resolve => {
+                            if (document.querySelector(selector)) {
+                                return resolve(document.querySelector(selector));
+                            }
+
+                            const observer = new MutationObserver(mutations => {
+                                if (document.querySelector(selector)) {
+                                    resolve(document.querySelector(selector));
+                                    observer.disconnect();
+                                }
+                            });
+
+                            observer.observe(document.body, {
+                                childList: true,
+                                subtree: true
+                            });
+                        });
+                    }
+                    
+                    window.onload = () => {
+                        waitForElm('#fintoc-widget-id').then((elm) => {
+                            console.log('Fintoc iframe loaded!');
+                            elm.src = elm.src.replace("null", "*")
+                        });
+                        const widget = Fintoc.create({
+                        publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
+                        holderType: 'individual',
+                        webhookUrl: 'https://my-url.com/receive/webhook',
+                        product: 'movements',
+                        onSuccess: (link) => {
+                            console.log('Success!');
+                            console.log(link);
+                            window.top.stBridges.send('fintoc-bridge', link)
+                        },
+                        onExit: () => {
+                            console.log('Widget closing!');
+                        },
+                        onEvent: (event) => {
+                            console.log('An event just happened!');
+                            console.log(event);
+                            window.top.stBridges.send('fintoc-bridge', event)
+                        },
+                        });
+                        
+                        widget.open()
+
+                    };
+                    </script>""")
+
 
 # Ask the user to enter their OpenAI API key
 API_O = st.sidebar.text_input("API-KEY", type="password")
