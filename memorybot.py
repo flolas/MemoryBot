@@ -7,6 +7,7 @@ The code creates a web application using Streamlit, a Python library for buildin
 
 # Import necessary libraries
 import streamlit as st
+import html
 from streamlit_modal import Modal
 import streamlit.components.v1 as components
 import uuid
@@ -84,7 +85,7 @@ def javascript(source: str) -> None:
         <iframe src="javascript: \
             var script = document.createElement('script'); \
             script.type = 'text/javascript'; \
-            script.text = {components.html.escape(repr(source))}; \
+            script.text = {html.escape(repr(source))}; \
             var div = window.parent.document.getElementById('{div_id}'); \
             div.appendChild(script); \
             div.parentElement.parentElement.parentElement.style.display = 'none'; \
