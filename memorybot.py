@@ -96,9 +96,6 @@ if data:
         }
 st.write('---')
 st.subheader('Bancos Conectados')
-with st.expander("# See explanation"):
-    st.write("fdsfds")
-    st.image("https://static.streamlit.io/examples/dice.jpg")
 
 col1, col2, col3= st.columns([1, 3 ,1])
 if len(st.session_state["fintoc_links"]) > 0:
