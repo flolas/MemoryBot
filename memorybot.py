@@ -78,6 +78,7 @@ st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("my-bridge", default="no button is clicked")
+components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
 
 st.write(data)
 
