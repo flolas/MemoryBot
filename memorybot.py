@@ -80,11 +80,14 @@ st.subheader("Conoce cómo están tus finanzas!")
 data = stb.bridge("my-bridge", default="no button is clicked")
 components.html("""
 <script type="text/javascript">
-console.log("executed")
+console.log("Loaded Script")
+window.fintoc_widget = function(){
+    console.log("Click")
+}
 </script>
 """)
 stb.html("""
-<button id="fintocLink">Button 3</button>
+<button id="fintocLink" onClick="window.parent.fintoc_widget()">Button 3</button>
 """)
 
 st.write(data)
