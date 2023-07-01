@@ -79,16 +79,7 @@ st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("my-bridge", default="no button is clicked")
 
-stb.html("""
-<button onClick="window.top.stBridges.send('my-bridge', 'button 1 is clicked')">Button 1</button>
-<button onClick="window.top.stBridges.send('my-bridge', 'button 2 is clicked')">Button 2</button>
-<button onClick="window.top.stBridges.send('my-bridge', 'button 3 is clicked')">Button 3</button>
-""")
-components.html("""
-<button onClick="window.top.stBridges.send('my-bridge', 'button 4 is clicked')">Button 4</button>
-<button onClick="window.top.stBridges.send('my-bridge', 'button 5 is clicked')">Button 5</button>
-<button onClick="window.top.stBridges.send('my-bridge', 'button 6 is clicked')">Button 6</button>
-""")
+components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
 
 st.write(data)
 
