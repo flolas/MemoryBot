@@ -80,6 +80,8 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
+open_modal = st.button("Conectar mis cuentas bancarias")
+
 data = stb.bridge("fintoc-bridge")
 if data:
     if data['id'] not in st.session_state["fintoc_links"]:
@@ -87,15 +89,18 @@ if data:
             "bank": data['institution']['name'],
             "user": data['username'],
         }
-
-st.session_state["fintoc_links"]
+for 
+st.subheader('Cuentas Conectadas')
+if len(st.session_state["fintoc_links"]) > 0:
+    for link in st.session_state["fintoc_links"].values():
+        st.write(f'{link["bank"]}(link["user"]})')
+else:
+    st.write("No tienes ninguna cuenta conectada.")
 
 
 # Carga Widget Fintoc
 
 modal = Modal("", "fintoc-modal")
-
-open_modal = st.button("Obtener movimientos de mis bancos")
 if open_modal:
     modal.open()
 
