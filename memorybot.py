@@ -86,7 +86,10 @@ if open_modal:
 
 if modal.is_open():
     with modal.container():
-        components.iframe("https://fintoc.tiiny.site?parent=*", height = 600)
+        res = components.iframe("https://fintoc.tiiny.site?parent=*", height = 750)
+        print("asd")
+        print(res)
+        print("asd2")
 
 
 # Ask the user to enter their OpenAI API key
