@@ -91,10 +91,9 @@ if modal.is_open():
         <script>
         window.onload = () => {
             const widget = Fintoc.create({
-            publicKey: 'FINTOC_PUBLIC_KEY',
+            publicKey: 'pk_live_Dt78zNy6ca_8EPu1qgKwcdpckU_XhfiX',
             holderType: 'individual',
             product: 'movements',
-            webhookUrl: 'https://my-url.com/receive/webhook',
             onSuccess: (link) => {
                 console.log('Success!');
                 console.log(link);
