@@ -96,7 +96,7 @@ if data:
         }
 st.write('---')
 st.subheader('Bancos Conectadas')
-col1, col2, col3= st.columns([1, 2 ,1])
+col1, col2, col3= st.columns([1, 3 ,1])
 if len(st.session_state["fintoc_links"]) > 0:
     for link in st.session_state["fintoc_links"].values():
         with col1:
@@ -105,7 +105,7 @@ if len(st.session_state["fintoc_links"]) > 0:
             st.write(f'🏦 Banco: {link["bank"]}') 
             st.write(f'👤 Usuario: {link["user"]}') 
         with col3:
-            st.button('Eliminar ❌', type = 'primary', use_container_width=True)
+            st.button('Eliminar ❌', type = 'secondary', use_container_width=True)
         st.write('---')
 
 else:
