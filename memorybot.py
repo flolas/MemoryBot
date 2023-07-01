@@ -112,6 +112,7 @@ if len(st.session_state["fintoc_links"]) > 0:
 else:
     st.write("No tienes ninguna cuenta conectada.")
 
+st.button("Terminé de agregar bancos.", disabled = len(st.session_state["fintoc_links"]) == 0)
 
 # Carga Widget Fintoc
 modal = Modal("", "fintoc-modal")
