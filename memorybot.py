@@ -87,7 +87,7 @@ window.top.fintoc_widget = function(){
 </script>
 """)
 stb.html("""
-<button id="fintocLink" onClick="window.parent.fintoc_widget()">Button 3</button>
+<button id="fintocLink" onClick="function(){console.log("Click")}">Button 3</button>
 """)
 
 st.write(data)
