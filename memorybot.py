@@ -80,7 +80,12 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
-open_modal = st.button("Conectar mis cuentas bancarias")
+
+agree = st.checkbox('Doy mi consentimiento para el tratamiento de mis datos utilizando esta página y proveedor Fintoc para que se me entregue una asesoría y diagnotisco de mis finanzas.')
+st.caption('''Los datos serán eliminados una vez que cierres el explorador, si quieres volver a utilizar la herramienta debes ingresar nuevamente tus datos bancarios.''', unsafe_allow_html=False, *, help=None)
+
+open_modal = st.button("Conectar mis cuentas bancarias 🔌 🏦", disabled = not agree)
+
 
 data = stb.bridge("fintoc-bridge")
 if data:
