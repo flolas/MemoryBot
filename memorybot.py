@@ -81,11 +81,12 @@ st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("fintoc-bridge")
-if data['id'] not in st.session_state["fintoc_links"]:
-    st.session_state["fintoc_links"][data['id']] = {
-        "bank": data['institucion']['name'],
-        "user": data['username']
-    }
+if data:
+    if data['id'] not in st.session_state["fintoc_links"]:
+        st.session_state["fintoc_links"][data['id']] = {
+            "bank": data['institucion']['name'],
+            "user": data['username'],
+        }
 
 st.session_state["fintoc_links"]
 
