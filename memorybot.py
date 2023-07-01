@@ -136,6 +136,7 @@ res = stb.html('''
                         });
                     }
                 </script>
+                <button onClick="stBridges.send('my-bridge', 'button 1 is clicked')">Button 1</button>
     ''')
 st.write(data)
 
