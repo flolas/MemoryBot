@@ -21,7 +21,8 @@ from langchain.chains.conversation.prompt import ENTITY_MEMORY_CONVERSATION_TEMP
 from langchain.llms import OpenAI
 
 # Set Streamlit page configuration
-st.set_page_config(page_title='🧠MemoryBot🤖', layout='wide')
+st.set_page_config(page_title='Radiografía Financiera', layout='wide')
+
 # Initialize session states
 if "generated" not in st.session_state:
     st.session_state["generated"] = []
@@ -31,6 +32,8 @@ if "input" not in st.session_state:
     st.session_state["input"] = ""
 if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
+if "fintoc_links" not in st.session_state:
+    st.session_state["fintoc_links"] = []
 
 # Define function to get user input
 def get_text():
@@ -77,8 +80,14 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
-data = stb.bridge("fintoc-bridge", default="No widget loaded")
+data = stb.bridge("fintoc-bridge")
+st.session_state["fintoc_links"].append(data)
+
+st.session_state["fintoc_links"]
+
+st.write("----")
 st.write(data)
+
 
 # Carga Widget Fintoc
 
@@ -134,7 +143,6 @@ if modal.is_open():
                         onEvent: (event) => {
                             console.log('An event just happened!');
                             console.log(event);
-                            window.top.stBridges.send('fintoc-bridge', event)
                         },
                         });
                         
