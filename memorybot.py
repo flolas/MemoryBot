@@ -84,7 +84,7 @@ data = stb.bridge("fintoc-bridge")
 if data:
     if data['id'] not in st.session_state["fintoc_links"]:
         st.session_state["fintoc_links"][data['id']] = {
-            "bank": data['institucion']['name'],
+            "bank": data['institution']['name'],
             "user": data['username'],
         }
 
