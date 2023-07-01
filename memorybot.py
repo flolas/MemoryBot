@@ -77,6 +77,7 @@ st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 components.html('''
         <script src="https://js.fintoc.com/v1/"></script>
+        window.frameElement.src = 'file://srcdoc'
         <script>
         window.onload = () => {
             const widget = Fintoc.create({
