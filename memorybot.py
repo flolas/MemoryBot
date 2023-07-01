@@ -73,7 +73,7 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
-modal = Modal("Demo Modal")
+modal = Modal("Demo Modal", "key")
 open_modal = st.button("Open")
 if open_modal:
     modal.open()
