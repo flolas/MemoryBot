@@ -79,9 +79,21 @@ st.subheader("Conoce cómo están tus finanzas!")
 
 data = stb.bridge("my-bridge", default="no button is clicked")
 stb.html("""
-<img onload="window.parent.stBridges.send('my-bridge', 'button 3 is clicked')" width="0" height="0">
 
-<button onClick="callFintoc()">Button 3</button>
+<script type="text/javascript">
+    var myLink = document.getElementById('fintocLink');
+
+    myLink.onclick = function(){
+
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = "https://js.fintoc.com/v1/"; 
+        document.getElementsByTagName("head")[0].appendChild(script);
+        return false;
+    }
+</script>
+
+<button id="fintocLink" onClick="callFintoc()">Button 3</button>
 """)
 
 st.write(data)
