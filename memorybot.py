@@ -154,6 +154,7 @@ modal = Modal("", "fintoc-modal")
 if open_modal:
     modal.open()
 if data_events == 'CLOSE':
+    time.sleep(5)
     modal.close()
     
 if modal.is_open():
