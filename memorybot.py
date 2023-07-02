@@ -91,25 +91,35 @@ open_modal = st.button("Conectar mis cuentas bancarias 🔌 🏦", disabled = no
 
 data = stb.bridge("fintoc-bridge")
 if data:
-    data
     if data['id'] not in st.session_state["fintoc_links"]:
         st.session_state["fintoc_links"][data['id']] = {
-            "bank": data['institution']['name'],
+            "exchange_token": data['exchange_token'],
             "user": data['username'],
         }
-st.write('---')
-st.subheader('Bancos Conectados')
 
-col1, col2, col3= st.columns([1, 3 ,1])
-if len(st.session_state["fintoc_links"]) > 0:
-    for link_id, link in st.session_state["fintoc_links"].items():
-        with col1:
-            st.header(f'✅') 
-        with col2:
-            st.write(f'🏦 Banco: {link["bank"]}') 
-            st.write(f'👤 Usuario: {link["user"]}') 
-        with col3:
-            st.button('Eliminar ❌', type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
+        url = f"https://api.fintoc.com/v1/links/exchange?exchange_token={data['exchange_token']}"
+        headers = {
+            "accept": "application/json",
+            "Authorization": st.secrets["FINTOC_SECRET_KEY"],
+        }
+        response = requests.get(url, headers=headers).json()
+        st.session_state["fintoc_links"][data['id']]['link_token'] = response['link_token']
+        st.session_state["fintoc_links"][data['id']]['accounts'] = response['accounts']
+        st.session_state["fintoc_links"][data['id']]['bank'] = response['institution']['name']
+    st.session_state["fintoc_links"]
+st.write('---')
+
+#st.subheader('Bancos Conectados')
+#col1, col2, col3= st.columns([1, 3 ,1])
+#if len(st.session_state["fintoc_links"]) > 0:
+#    for link_id, link in st.session_state["fintoc_links"].items():
+#        with col1:
+#            st.header(f'✅') 
+#        with col2:
+#            st.write(f'🏦 Banco: {link["bank"]}') 
+#            st.write(f'👤 Usuario: {link["user"]}') 
+#        with col3:
+#            st.button('Eliminar ❌', type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
         st.write('---')
 
 else:
