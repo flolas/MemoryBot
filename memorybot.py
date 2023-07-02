@@ -93,7 +93,7 @@ data = stb.bridge("fintoc-bridge")
 if data:
     if data['id'] not in st.session_state["fintoc_links"]:
         st.session_state["fintoc_links"][data['id']] = {
-            "exchange_token": data['exchange_token'],
+            "exchange_token": data['exchangeToken'],
             "user": data['username'],
         }
 
@@ -186,6 +186,7 @@ if modal.is_open():
                         publicKey: '<PUBLIC_KEY>',
                         widgetToken: '<WIDGET_TOKEN>',
                         onSuccess: (link) => {
+                            console.log(link.exchangeToken)
                             console.log('Success!');
                             console.log(link);
                             window.top.stBridges.send('fintoc-bridge', link)
