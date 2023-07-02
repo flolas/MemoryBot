@@ -92,6 +92,8 @@ open_modal = st.button("Conectar mis cuentas bancarias 🔌 🏦", disabled = no
 
 
 data = stb.bridge("fintoc-bridge")
+data_events = stb.bridge("fintoc-bridge-events")
+
 if data:
     if data['id'] not in st.session_state["fintoc_links"]:
         st.session_state["fintoc_links"][data['id']] = {
@@ -151,7 +153,9 @@ st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_
 modal = Modal("", "fintoc-modal")
 if open_modal:
     modal.open()
-
+if data_events == 'CLOSE':
+    modal.close()
+    
 if modal.is_open():
     with modal.container():
             url = "https://api.fintoc.com/v1/link_intents"
@@ -206,6 +210,7 @@ if modal.is_open():
                             console.log('Success!');
                             console.log(link);
                             window.top.stBridges.send('fintoc-bridge', link)
+                            window.top.stBridges.send('fintoc-bridge-events', 'CLOSE')
                         },
                         onExit: () => {
                             console.log('Widget closing!');
