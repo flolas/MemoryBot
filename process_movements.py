@@ -4,7 +4,6 @@ import pandas as pd
 import re
 from thefuzz import fuzz
 from thefuzz import process
-pd.set_option('display.max_rows', None)
 
 def get_dataframe_movements_for_link_tokens(link_tokens, since, until, fintoc_client):
     links_accounts_movements = []
@@ -44,7 +43,7 @@ def get_dataframe_movements_for_link_tokens(link_tokens, since, until, fintoc_cl
         print('\t')
     return pd.DataFrame.from_dict(links_accounts_movements)
 
-    def categorize_movement(movement):
+def categorize_movement(movement):
     patterns = {
         r'.*SEGURO.*|.*DESGRAVAMEN.*' : 'Seguros',
         r'PAGO.*TAR.*CRED.*|.*T\. CRÉDITO.*|.*TARJETA DE C.*|.*DEUDA INTERNACIO.*|.*MONTO CANCELADO.*': 'Pago de Tarjeta de Crédito',
@@ -131,6 +130,7 @@ def categorize_product_movement(movement):
         return 'Tarjeta de Crédito'
     
     return 'Otros'
+
 def get_monthly_income_df(movements_df):
     renta = movements_df[movements_df.category == 'Remuneraciones'][['post_date', 'year_month', 'amount']].copy()
     observations = len(renta.groupby(['year_month']).amount.sum())
@@ -319,7 +319,7 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
 
     final_df_ingress = get_df_with_numerics_rolling_median(get_pivoted_data(df_ingress))
     final_df_egress = get_df_with_numerics_rolling_median(get_pivoted_data(df_egress))
-    
+
     return {
         'monthly_egress' : final_df_egress[['year_month', 'Total']]
         'monthly_ingress' : final_df_ingress[['year_month', 'Total']]
