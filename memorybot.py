@@ -9,6 +9,7 @@ The code creates a web application using Streamlit, a Python library for buildin
 import streamlit as st
 import html
 import time
+import requests
 
 from streamlit_modal import Modal
 import st_bridge as stb
@@ -128,6 +129,22 @@ if open_modal:
 
 if modal.is_open():
     with modal.container():
+            url = "https://api.fintoc.com/v1/link_intents"
+
+            payload = {
+                "product": "movements",
+                "country": "cl",
+                "holder_type": "individual"
+            }
+            headers = {
+                "accept": "application/json",
+                "Authorization": st.secrets["FINTOC_SECRET_KEY"],
+                "content-type": "application/json"
+            }
+
+            response = requests.post(url, json=payload, headers=headers)
+
+            widget_token = response.json()['widget_token']
             components.html("""
                     <script src="https://js.fintoc.com/v1/"></script>
                     <script>
@@ -157,8 +174,8 @@ if modal.is_open():
                             elm.src = elm.src.replace("null", "*")
                         });
                         window.fintocWidget = Fintoc.create({
-                        publicKey: 'pk_live_xLXDENzB83i7YLfNeSnweP1t_dAvcjy2',
-                        widgetToken: 'li_qJB04gHE8Xe4zOb4_sec_FFZ5AvC68aWkc1Gn7gKMa3va',
+                        publicKey: '<PUBLIC_KEY>',
+                        widgetToken: '<WIDGET_TOKEN>',
                         onSuccess: (link) => {
                             console.log('Success!');
                             console.log(link);
@@ -176,7 +193,7 @@ if modal.is_open():
                         window.fintocWidget.open()
 
                     };
-                    </script>""",  height = 750)
+                    </script>""".replace("<PUBLIC_KEY>", st.secrets["FINTOC_PUBLIC_KEY"]).replace("<WIDGET_TOKEN>", widget_token),  height = 750)
 
 
 # Ask the user to enter their OpenAI API key
