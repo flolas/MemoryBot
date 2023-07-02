@@ -114,7 +114,6 @@ st.subheader('Cuentas Conectadas')
 col1, col2, col3= st.columns([2, 2 ,1])
 if len(st.session_state["fintoc_links"]) > 0:
     for link_id, link in st.session_state["fintoc_links"].items():
-        st.write('---')
         with col1:
             st.write(f'🏦 Banco: {link["bank"]}') 
             st.write(f'👤 Usuario: {link["holder_id"]}') 
@@ -127,6 +126,7 @@ if len(st.session_state["fintoc_links"]) > 0:
             st.button('Eliminar ❌', key = link_id, type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
 else:
     st.write("No tienes ninguna cuenta conectada.")
+st.write('---')
 
 def retrieve_data():
     with st.spinner('Obteniendo movimientos...'):
