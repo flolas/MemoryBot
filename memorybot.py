@@ -90,6 +90,7 @@ open_modal = st.button("Conectar mis cuentas bancarias 🔌 🏦", disabled = no
 
 data = stb.bridge("fintoc-bridge")
 if data:
+    data
     if data['id'] not in st.session_state["fintoc_links"]:
         st.session_state["fintoc_links"][data['id']] = {
             "bank": data['institution']['name'],
