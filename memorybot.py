@@ -96,7 +96,7 @@ if data:
             "exchange_token": data['exchangeToken'],
         }
 
-        url = f"https://api.fintoc.com/v1/links/exchange?exchange_token={data['exchange_token']}"
+        url = f"https://api.fintoc.com/v1/links/exchange?exchange_token={data['exchangeToken']}"
         headers = {
             "accept": "application/json",
             "Authorization": st.secrets["FINTOC_SECRET_KEY"],
