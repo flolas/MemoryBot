@@ -106,7 +106,7 @@ if data:
         st.session_state["fintoc_links"][data['id']]['accounts'] = response['accounts']
         st.session_state["fintoc_links"][data['id']]['bank'] = response['institution']['name']
         st.session_state["fintoc_links"][data['id']]['holder_id'] = response['holder_id']
-    st.session_state["fintoc_links"]
+    #st.session_state["fintoc_links"]
 st.write('---')
 
 st.subheader('Cuentas Conectadas')
