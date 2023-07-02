@@ -120,7 +120,7 @@ if len(st.session_state["fintoc_links"]) > 0:
             for account in link['accounts']:
                 st.write(f'📋 No: {account["number"]} ({account["name"]})') 
         with col3:
-            st.button('Eliminar ❌', type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
+            st.button('Eliminar ❌', key = link_id, type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
         st.write('---')
 else:
     st.write("No tienes ninguna cuenta conectada.")
