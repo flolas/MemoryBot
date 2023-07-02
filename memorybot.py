@@ -130,7 +130,8 @@ if len(st.session_state["fintoc_links"]) > 0:
             with col3:
                 st.button('Eliminar ❌', key = link_id, type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
     except Exception as e:
-        raise print(f'{e}. Data: {st.session_state["fintoc_links"]}')
+        st.session_state["fintoc_links"]
+        raise e
 
 else:
     st.write("No tienes ninguna cuenta conectada.")
