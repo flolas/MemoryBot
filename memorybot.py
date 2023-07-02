@@ -109,20 +109,21 @@ if data:
     st.session_state["fintoc_links"]
 st.write('---')
 
-#st.subheader('Bancos Conectados')
-#col1, col2, col3= st.columns([1, 3 ,1])
-#if len(st.session_state["fintoc_links"]) > 0:
-#    for link_id, link in st.session_state["fintoc_links"].items():
-#        with col1:
-#            st.header(f'✅') 
-#        with col2:
-#            st.write(f'🏦 Banco: {link["bank"]}') 
-#            st.write(f'👤 Usuario: {link["user"]}') 
-#        with col3:
-#            st.button('Eliminar ❌', type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
-#        st.write('---')
-#else:
-#    st.write("No tienes ninguna cuenta conectada.")
+st.subheader('Cuentas Conectadas')
+col1, col2, col3= st.columns([1, 3 ,1])
+if len(st.session_state["fintoc_links"]) > 0:
+    for link_id, link in st.session_state["fintoc_links"].items():
+        with col1:
+            st.write(f'🏦 Banco: {link["bank"]}') 
+            st.write(f'👤 Usuario: {link["holder_id"]}') 
+        with col2:
+            for account in link['accounts']:
+                st.write(f'📋 Numero de Cuenta: {account["number"]} ({account["name"]})') 
+        with col3:
+            st.button('Eliminar ❌', type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
+        st.write('---')
+else:
+    st.write("No tienes ninguna cuenta conectada.")
 
 def retrieve_data():
     with st.spinner('Obteniendo movimientos...'):
