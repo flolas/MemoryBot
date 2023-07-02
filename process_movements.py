@@ -321,11 +321,11 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
     final_df_egress = get_df_with_numerics_rolling_median(get_pivoted_data(df_egress))
 
     return {
-        'monthly_egress' : final_df_egress[['year_month', 'Total']]
-        'monthly_ingress' : final_df_ingress[['year_month', 'Total']]
-        'monthly_spendings' : final_df_spendings[['year_month', 'Total', 'Total_rolling_median']]
-        'monthly_savings' : final_df_savings[['year_month', 'median_amount']]
-        'monthly_income' : final_df_income[['year_month', 'median_amount']]
-        'monthly_mortgage' : final_df_mortgage[['year_month', 'Créditos_rolling_median']]
-        'monthly_credit_card_usage' : final_df_mortgage[['year_month', 'Pago de Tarjeta de Crédito_rolling_median']]
+        'monthly_egress' : final_df_egress[['year_month', 'Total']],
+        'monthly_ingress' : final_df_ingress[['year_month', 'Total']],
+        'monthly_spendings' : final_df_spendings[['year_month', 'Total', 'Total_rolling_median']],
+        'monthly_savings' : final_df_savings[['year_month', 'median_amount']],
+        'monthly_income' : final_df_income[['year_month', 'median_amount']],
+        'monthly_mortgage' : final_df_mortgage[['year_month', 'Créditos_rolling_median']],
+        'monthly_credit_card_usage' : final_df_mortgage[['year_month', 'Pago de Tarjeta de Crédito_rolling_median']],
     }
