@@ -120,10 +120,9 @@ st.write('---')
 #            st.write(f'👤 Usuario: {link["user"]}') 
 #        with col3:
 #            st.button('Eliminar ❌', type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
-        st.write('---')
-
-else:
-    st.write("No tienes ninguna cuenta conectada.")
+#        st.write('---')
+#else:
+#    st.write("No tienes ninguna cuenta conectada.")
 
 def retrieve_data():
     with st.spinner('Obteniendo movimientos...'):
