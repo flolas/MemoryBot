@@ -157,7 +157,7 @@ if modal.is_open():
                         });
                         window.fintocWidget = Fintoc.create({
                         publicKey: 'pk_live_xLXDENzB83i7YLfNeSnweP1t_dAvcjy2',
-                        widgetToken: 'li_Dmd1R5HqQ4b90bVO_sec_qrsWkdRJroJH4RyYyb1wLfLC',
+                        widgetToken: 'li_qJB04gHE8Xe4zOb4_sec_FFZ5AvC68aWkc1Gn7gKMa3va',
                         onSuccess: (link) => {
                             console.log('Success!');
                             console.log(link);
