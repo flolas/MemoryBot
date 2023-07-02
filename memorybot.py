@@ -174,7 +174,7 @@ if modal.is_open():
                         },
                         });
                         
-                        widget.open()
+                        window.fintocWidget.open()
 
                     };
                     </script>""",  height = 750)
