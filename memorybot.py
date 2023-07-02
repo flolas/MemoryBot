@@ -22,6 +22,8 @@ from langchain.chains.conversation.memory import ConversationEntityMemory
 from langchain.chains.conversation.prompt import ENTITY_MEMORY_CONVERSATION_TEMPLATE
 from langchain.llms import OpenAI
 
+from process_movements import get_analytical_dataframes
+
 # Set Streamlit page configuration
 st.set_page_config(page_title='Radiografía Financiera', layout='wide')
 
@@ -130,6 +132,16 @@ st.write('---')
 
 def retrieve_data():
     with st.spinner('Obteniendo movimientos...'):
+        link_tokens_available = []
+        for link_id, link in st.session_state["fintoc_links"].items():
+            link_tokens_available.append(link["link_token"])
+
+        st.session_state["fintoc_data"] = get_analytical_dataframes(
+        fintoc_secret_key =  st.secrets["FINTOC_SECRET_KEY"],
+        link_tokens = link_tokens_available,
+        since="2022-01-01",
+        until="2023-07-01",
+        )
         time.sleep(5)
     st.success('Done!')
 

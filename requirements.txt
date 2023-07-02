@@ -4,3 +4,5 @@ streamlit
 streamlit-modal
 streamlit-bridge
 fintoc
+pandas
+thefuzz
