@@ -118,7 +118,7 @@ if len(st.session_state["fintoc_links"]) > 0:
             st.write(f'👤 Usuario: {link["holder_id"]}') 
         with col2:
             for account in link['accounts']:
-                st.write(f'📋 Numero de Cuenta: {account["number"]} ({account["name"]})') 
+                st.write(f'📋 No: {account["number"]} ({account["name"]})') 
         with col3:
             st.button('Eliminar ❌', type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
         st.write('---')
