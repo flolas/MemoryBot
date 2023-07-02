@@ -94,7 +94,6 @@ if data:
     if data['id'] not in st.session_state["fintoc_links"]:
         st.session_state["fintoc_links"][data['id']] = {
             "exchange_token": data['exchangeToken'],
-            "user": data['username'],
         }
 
         url = f"https://api.fintoc.com/v1/links/exchange?exchange_token={data['exchange_token']}"
@@ -106,6 +105,7 @@ if data:
         st.session_state["fintoc_links"][data['id']]['link_token'] = response['link_token']
         st.session_state["fintoc_links"][data['id']]['accounts'] = response['accounts']
         st.session_state["fintoc_links"][data['id']]['bank'] = response['institution']['name']
+        st.session_state["fintoc_links"][data['id']]['holder_id'] = response['holder_id']
     st.session_state["fintoc_links"]
 st.write('---')
 
