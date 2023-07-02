@@ -117,17 +117,21 @@ debug = True
 st.subheader('Cuentas Conectadas')
 col1, col2, col3= st.columns([2, 2 ,1])
 if len(st.session_state["fintoc_links"]) > 0:
-    for link_id, link in st.session_state["fintoc_links"].items():
-        with col1:
-            st.write(f'🏦 Banco: {link["bank"]}') 
-            st.write(f'👤 Usuario: {link["holder_id"]}') 
-            if debug:
-                st.write(f'🔗 Link Token: {link["link_token"]}') 
-        with col2:
-            for account in link['accounts']:
-                st.write(f'📋 No: {account["number"]} ({account["name"]})') 
-        with col3:
-            st.button('Eliminar ❌', key = link_id, type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
+    try:
+        for link_id, link in st.session_state["fintoc_links"].items():
+            with col1:
+                st.write(f'🏦 Banco: {link["bank"]}') 
+                st.write(f'👤 Usuario: {link["holder_id"]}') 
+                if debug:
+                    st.write(f'🔗 Link Token: {link["link_token"]}') 
+            with col2:
+                for account in link['accounts']:
+                    st.write(f'📋 No: {account["number"]} ({account["name"]})') 
+            with col3:
+                st.button('Eliminar ❌', key = link_id, type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
+    except Exception as e:
+        raise print(f'{e}. Data: {st.session_state["fintoc_links"]}')
+
 else:
     st.write("No tienes ninguna cuenta conectada.")
 st.write('---')
@@ -207,9 +211,7 @@ if modal.is_open():
                         publicKey: '<PUBLIC_KEY>',
                         widgetToken: '<WIDGET_TOKEN>',
                         onSuccess: (link) => {
-                            console.log(link.exchangeToken)
                             console.log('Success!');
-                            console.log(link);
                             window.top.stBridges.send('fintoc-bridge', link)
                             window.top.stBridges.send('fintoc-bridge-events', 'CLOSE')
                         },
