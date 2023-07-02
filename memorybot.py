@@ -157,9 +157,7 @@ if modal.is_open():
                         });
                         window.fintocWidget = Fintoc.create({
                         publicKey: 'pk_live_xLXDENzB83i7YLfNeSnweP1t_dAvcjy2',
-                        holderType: 'individual',
-                        webhookUrl: 'https://webhook.site/b24f4a51-2a52-4911-b618-5d1d192fbc20',
-                        product: 'movements',
+                        widgetToken: 'li_Dmd1R5HqQ4b90bVO_sec_qrsWkdRJroJH4RyYyb1wLfLC',
                         onSuccess: (link) => {
                             console.log('Success!');
                             console.log(link);
