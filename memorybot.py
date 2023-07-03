@@ -247,7 +247,7 @@ with st.container():
         st.write("Hola 👋!, para poder entregarte asesoría financiera, primero debes agregar cuentas")
         if st.session_state["langchain_init"]:
             st.write("Muy bien! Ya puedes hacerme preguntas.")
-            time.sleep(2)
+            time.sleep(4)
             st.write("Partiré con algunos datos interesantes que encontré!")
         #st.line_chart(np.random.randn(30, 3))
     
