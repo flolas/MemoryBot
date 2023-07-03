@@ -158,7 +158,7 @@ modal = Modal("", "fintoc-modal")
 if open_modal:
     modal.open()
     
-if modal.is_open() and st.session_state["fintoc_widget"] is False:
+if modal.is_open():
     with modal.container():
         if st.session_state["fintoc_widget"] is False:
             st.session_state["fintoc_widget"] = True
