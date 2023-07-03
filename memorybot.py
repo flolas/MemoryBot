@@ -243,7 +243,7 @@ def retrieve_data():
         st.session_state["fintoc_data"]
 st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
 with st.container():
-    with st.chat_message("Asesor Financiero", "🤖"):
+    with st.chat_message("Asesor Financiero", avatar = "🤖"):
         st.write("Hola 👋!, para poder entregarte asesoría financiera, primero debes agregar cuentas")
         if st.session_state["langchain_init"]:
             st.write("Muy bien! Ya puedes hacerme preguntas.")
