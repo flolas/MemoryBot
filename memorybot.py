@@ -270,7 +270,7 @@ with st.container():
             st.plotly_chart(plot, theme="streamlit", use_container_width=True)
     if prompt:
         pandas_ai = initialize_langchain_agent()
-        output = pandas_ai.run(list(st.session_state["fintoc_data"]), prompt)
+        output = pandas_ai.run(st.session_state["fintoc_data"]["monthly_ingress_egress"]), prompt)
         st.session_state.past.append(prompt)  
         st.session_state.generated.append(output) 
         for idx, user_message in enumerate(st.session_state.past):
