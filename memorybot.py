@@ -90,72 +90,9 @@ modal = Modal("", "fintoc-modal")
 agree = st.checkbox('Doy mi consentimiento para el tratamiento de mis datos en radiografiafinanciera.cl (esta pagina), proveedores Fintoc y OpenAI con la finalidad de que se me entregue una asesoría y diagnotisco de mis finanzas.')
 st.caption('Los datos serán eliminados una vez que cierres el explorador, si quieres volver a utilizar la herramienta debes ingresar nuevamente tus datos bancarios.')
 
-open_modal = st.button("Conectar mis cuentas bancarias 🔌 🏦", disabled = not agree)
-
 data = stb.bridge("fintoc-bridge")
-if data is not None:
-    if data['id'] not in st.session_state["fintoc_links"] or len(st.session_state["fintoc_links"][data['id']]) < 4:
-        st.session_state["fintoc_links"][data['id']] = {
-            "exchange_token": data['exchangeToken'],
-        }
 
-        url = f"https://api.fintoc.com/v1/links/exchange?exchange_token={data['exchangeToken']}"
-        headers = {
-            "accept": "application/json",
-            "Authorization": st.secrets["FINTOC_SECRET_KEY"],
-        }
-        response = requests.get(url, headers=headers).json()
-        st.session_state["fintoc_links"][data['id']]['link_token'] = response['link_token']
-        st.session_state["fintoc_links"][data['id']]['accounts'] = response['accounts']
-        st.session_state["fintoc_links"][data['id']]['bank'] = response['institution']['name']
-        st.session_state["fintoc_links"][data['id']]['holder_id'] = response['holder_id']
-        data = None
-        modal.close()
-
-    #st.session_state["fintoc_links"]
-st.write('---')
-
-debug = True
-st.subheader('Cuentas Conectadas')
-col1, col2, col3= st.columns([2, 2 ,1])
-if len(st.session_state["fintoc_links"]) > 0:
-    try:
-        for link_id, link in st.session_state["fintoc_links"].items():
-            with col1:
-                st.write(f'🏦 Banco: {link["bank"]}') 
-                st.write(f'👤 Usuario: {link["holder_id"]}') 
-                if debug:
-                    st.write(f'🔗 Link Token: {link["link_token"]}') 
-            with col2:
-                for account in link['accounts']:
-                    st.write(f'📋 No: {account["number"]} ({account["name"]})') 
-            with col3:
-                st.button('Eliminar ❌', key = link_id, type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
-    except Exception as e:
-        st.session_state["fintoc_links"]
-        raise e
-
-else:
-    st.write("No tienes ninguna cuenta conectada.")
-st.write('---')
-
-def retrieve_data():
-    with st.spinner('Obteniendo movimientos...'):
-        link_tokens_available = []
-        for link_id, link in st.session_state["fintoc_links"].items():
-            link_tokens_available.append(link["link_token"])
-
-        st.session_state["fintoc_data"] = get_analytical_dataframes(
-        fintoc_secret_key =  st.secrets["FINTOC_SECRET_KEY"],
-        link_tokens = link_tokens_available,
-        since="2022-01-01",
-        until="2023-07-01",
-        )
-        time.sleep(5)
-        st.session_state["fintoc_data"]
-    st.success('Done!')
-
-st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
+open_modal = st.button("Conectar mis cuentas bancarias 🔌 🏦", disabled = not agree)
 
 if open_modal:
     modal.open()
@@ -227,6 +164,68 @@ if modal.is_open():
                 };
                 </script>""".replace("<PUBLIC_KEY>", st.secrets["FINTOC_PUBLIC_KEY"]).replace("<WIDGET_TOKEN>", widget_token),  height = 750)
 
+if data is not None:
+    if data['id'] not in st.session_state["fintoc_links"] or len(st.session_state["fintoc_links"][data['id']]) < 4:
+        st.session_state["fintoc_links"][data['id']] = {
+            "exchange_token": data['exchangeToken'],
+        }
+
+        url = f"https://api.fintoc.com/v1/links/exchange?exchange_token={data['exchangeToken']}"
+        headers = {
+            "accept": "application/json",
+            "Authorization": st.secrets["FINTOC_SECRET_KEY"],
+        }
+        response = requests.get(url, headers=headers).json()
+        st.session_state["fintoc_links"][data['id']]['link_token'] = response['link_token']
+        st.session_state["fintoc_links"][data['id']]['accounts'] = response['accounts']
+        st.session_state["fintoc_links"][data['id']]['bank'] = response['institution']['name']
+        st.session_state["fintoc_links"][data['id']]['holder_id'] = response['holder_id']
+        data = None
+        modal.close()
+
+    #st.session_state["fintoc_links"]
+st.write('---')
+
+debug = True
+st.subheader('Cuentas Conectadas')
+col1, col2, col3= st.columns([2, 2 ,1])
+if len(st.session_state["fintoc_links"]) > 0:
+    try:
+        for link_id, link in st.session_state["fintoc_links"].items():
+            with col1:
+                st.write(f'🏦 Banco: {link["bank"]}') 
+                st.write(f'👤 Usuario: {link["holder_id"]}') 
+                if debug:
+                    st.write(f'🔗 Link Token: {link["link_token"]}') 
+            with col2:
+                for account in link['accounts']:
+                    st.write(f'📋 No: {account["number"]} ({account["name"]})') 
+            with col3:
+                st.button('Eliminar ❌', key = link_id, type = 'secondary', on_click=lambda : st.session_state["fintoc_links"].pop(link_id), use_container_width=True)
+    except Exception as e:
+        st.session_state["fintoc_links"]
+        raise e
+else:
+    st.write("No tienes ninguna cuenta conectada.")
+st.write('---')
+
+def retrieve_data():
+    with st.spinner('Obteniendo movimientos...'):
+        link_tokens_available = []
+        for link_id, link in st.session_state["fintoc_links"].items():
+            link_tokens_available.append(link["link_token"])
+
+        st.session_state["fintoc_data"] = get_analytical_dataframes(
+        fintoc_secret_key =  st.secrets["FINTOC_SECRET_KEY"],
+        link_tokens = link_tokens_available,
+        since="2022-01-01",
+        until="2023-07-01",
+        )
+        time.sleep(5)
+    st.success('Done!')
+    if debug:
+        st.session_state["fintoc_data"]
+st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
 
 # Ask the user to enter their OpenAI API key
 API_O = st.sidebar.text_input("API-KEY", type="password")
