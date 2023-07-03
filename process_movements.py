@@ -320,7 +320,7 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
     final_df_ingress = get_df_with_numerics_rolling_median(get_pivoted_data(df_ingress))
     final_df_egress = get_df_with_numerics_rolling_median(get_pivoted_data(df_egress))
     
-    final_view_monthly_ingress_egress = final_df_ingress.merge(final_df_egress, on = 'year_month').set_index("year_month")
+    final_view_monthly_ingress_egress = final_df_ingress[['year_month', 'Total']].merge(final_df_egress[['year_month', 'Total']], on = 'year_month').set_index("year_month")
     final_view_monthly_ingress_egress.columns = ['ingress', 'egress']
 
     return {
