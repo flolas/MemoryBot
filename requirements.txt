@@ -9,3 +9,4 @@ thefuzz
 plotly
 pandasai
 astor
+dotenv
