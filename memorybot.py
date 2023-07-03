@@ -109,7 +109,7 @@ if data is not None:
         st.session_state["fintoc_links"][data['id']]['accounts'] = response['accounts']
         st.session_state["fintoc_links"][data['id']]['bank'] = response['institution']['name']
         st.session_state["fintoc_links"][data['id']]['holder_id'] = response['holder_id']
-        st.session_state["fintoc_widget"] = False
+        data = None
     #st.session_state["fintoc_links"]
 st.write('---')
 
