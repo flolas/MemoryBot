@@ -158,9 +158,6 @@ st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_
 modal = Modal("", "fintoc-modal")
 if open_modal:
     modal.open()
-if data_events == 'CLOSE':
-    time.sleep(5)
-    modal.close()
     
 if modal.is_open():
     with modal.container():
@@ -214,7 +211,6 @@ if modal.is_open():
                         onSuccess: (link) => {
                             console.log('Success!');
                             window.top.stBridges.send('fintoc-bridge', link)
-                            window.top.stBridges.send('fintoc-bridge-events', 'CLOSE')
                         },
                         onExit: () => {
                             console.log('Widget closing!');
