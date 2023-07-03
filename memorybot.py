@@ -42,7 +42,8 @@ if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
 if "fintoc_links" not in st.session_state:
     st.session_state["fintoc_links"] = {}
-
+if "langchain_init" not in st.session_state:
+    st.session_state["langchain_init"] = False
 # Define function to get user input
 def get_text():
     """
@@ -222,7 +223,7 @@ st.write('---')
 
 if len(st.session_state["fintoc_data"]) > 0:
     langchain_agent_chain = initialize_langchain_agent()
-    st.write("Ya puedes conversar.")
+    st.session_state["langchain_init"] = True
 
 def retrieve_data():
     with st.spinner('Obteniendo movimientos...'):
@@ -242,9 +243,13 @@ def retrieve_data():
         st.session_state["fintoc_data"]
 st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
 with st.container():
-    with st.chat_message("user"):
-        st.write("Hello 👋")
-        st.line_chart(np.random.randn(30, 3))
+    with st.chat_message("Asesor Financiero", "🤖"):
+        st.write("Hola 👋!, para poder entregarte asesoría financiera, primero debes agregar cuentas")
+        if st.session_state["langchain_init"]:
+            st.write("Muy bien! Ya puedes hacerme preguntas.")
+            time.sleep(2)
+            st.write("Partiré con algunos datos interesantes que encontré!")
+        #st.line_chart(np.random.randn(30, 3))
     
 # Get the user input
 user_input = get_text()
