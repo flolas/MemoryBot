@@ -6,3 +6,4 @@ streamlit-bridge
 fintoc
 pandas==1.4.2
 thefuzz
+plotly
