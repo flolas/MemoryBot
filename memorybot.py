@@ -268,7 +268,7 @@ with st.container():
             ])
             st.plotly_chart(plot, theme="streamlit", use_container_width=True)
     if prompt:
-        pandas_ai = langchain_agent_chain()
+        pandas_ai = initialize_langchain_agent()
         output = pandas_ai(list(st.session_state["fintoc_data"].values()), prompt)
         st.session_state.past.append(prompt)  
         st.session_state.generated.append(output) 
