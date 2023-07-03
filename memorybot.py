@@ -246,7 +246,9 @@ with st.chat_message("assistant"):
     st.write("Hola 👋!, para poder entregarte asesoría financiera, primero debes agregar cuentas")
     if st.session_state["langchain_init"]:
         st.write("Muy bien! Ya terminé de obtener tu información desde tus bancos.")
-        #st.write("Partiré con algunos datos interesantes que encontré!")
+        st.write("Partiré con algunos datos interesantes que encontré!")
+        st.bar_chart(st.session_state["fintoc_data"]["monthly_egress"])
+
 if prompt:
     output = langchain_agent_chain.run(input=prompt)  
     st.session_state.past.append(prompt)  
