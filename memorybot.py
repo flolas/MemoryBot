@@ -241,24 +241,25 @@ def retrieve_data():
 st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
 if debug:
     st.session_state["fintoc_data"]
-prompt = st.chat_input("Preguntame algo relacionado a tu situacion financiera...")
-with st.chat_message("assistant"):
-    st.write("Hola 👋!, para poder entregarte asesoría financiera, primero debes agregar cuentas")
-    if st.session_state["langchain_init"]:
-        st.write("Muy bien! Ya terminé de obtener tu información desde tus bancos.")
-        st.write("Partiré con algunos datos interesantes que encontré!")
-        st.bar_chart(st.session_state["fintoc_data"]["monthly_egress"], "year_month", "Total")
+with st.container:
+    prompt = st.chat_input("Preguntame algo relacionado a tu situacion financiera...")
+    with st.chat_message("assistant"):
+        st.write("Hola 👋!, para poder entregarte asesoría financiera, primero debes agregar cuentas")
+        if st.session_state["langchain_init"]:
+            st.write("Muy bien! Ya terminé de obtener tu información desde tus bancos.")
+            st.write("Partiré con algunos datos interesantes que encontré!")
+            st.bar_chart(st.session_state["fintoc_data"]["monthly_egress"], "year_month", "Total")
 
-if prompt:
-    output = langchain_agent_chain.run(input=prompt)  
-    st.session_state.past.append(prompt)  
-    st.session_state.generated.append(output) 
-    for idx, user_message in enumerate(st.session_state.past):
-        with st.chat_message("user"):
-            st.write(user_message)
-        with st.chat_message("assistant"):
-            try:
-                st.write(st.session_state.generated[idx])
-            except:
-                pass
-            #st.line_chart(np.random.randn(30, 3))
+    if prompt:
+        output = langchain_agent_chain.run(input=prompt)  
+        st.session_state.past.append(prompt)  
+        st.session_state.generated.append(output) 
+        for idx, user_message in enumerate(st.session_state.past):
+            with st.chat_message("user"):
+                st.write(user_message)
+            with st.chat_message("assistant"):
+                try:
+                    st.write(st.session_state.generated[idx])
+                except:
+                    pass
+                #st.line_chart(np.random.randn(30, 3))
