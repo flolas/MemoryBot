@@ -253,13 +253,13 @@ with st.container():
 
             plot = px.Figure(data=[px.Bar(
                 name = 'Ingress',
-                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month),
-                y = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].ingress),
+                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month.values),
+                y = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].ingress.values),
             ),
                                 px.Bar(
                 name = 'Egress',
-                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month),
-                y = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].egress),
+                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month.values),
+                y = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].egress.values),
             )
             ])
             st.plotly_chart(plot, theme="streamlit", use_container_width=True)
