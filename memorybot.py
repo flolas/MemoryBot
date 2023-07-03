@@ -11,7 +11,7 @@ import html
 import time
 import requests
 import numpy as np
-import altair as alt
+import plotly.graph_objects as px
 
 from streamlit_modal import Modal
 import st_bridge as stb
@@ -249,16 +249,19 @@ with st.container():
         if st.session_state["langchain_init"]:
             st.write("Muy bien! Ya terminé de obtener tu información desde tus bancos.")
             st.write("Partiré con algunos datos interesantes que encontré!")
-            c = alt.Chart(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index()).mark_bar(
-                    opacity=1,
-                    ).encode(
-                    column = alt.Column('year_month:O', spacing = 5, header = alt.Header(labelOrient = "bottom")),
-                    x =alt.X('variable', sort = ["ingress", "egress"],  axis=None),
-                    y =alt.Y('value:Q'),
-                    color= alt.Color('variable')
-                ).configure_view(stroke='transparent')
-            st.altair_chart(c, use_container_width=True)
 
+            plot = px.Figure(data=[px.Bar(
+                name = 'Ingress',
+                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month),
+                y = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].ingress),
+            ),
+                                px.Bar(
+                name = 'Egress',
+                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month),
+                y = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].egress),
+            )
+            ])
+            st.plotly_chart(plot, theme="streamlit", use_container_width=True)
     if prompt:
         output = langchain_agent_chain.run(input=prompt)  
         st.session_state.past.append(prompt)  
