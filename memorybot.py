@@ -38,8 +38,6 @@ if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
 if "fintoc_links" not in st.session_state:
     st.session_state["fintoc_links"] = {}
-if "fintoc_widget" not in st.session_state:
-    st.session_state["fintoc_widget"] = False
 
 # Define function to get user input
 def get_text():
@@ -163,72 +161,70 @@ if open_modal:
     
 if modal.is_open():
     with modal.container():
-        if st.session_state["fintoc_widget"] is False:
-            st.session_state["fintoc_widget"] = True
-            url = "https://api.fintoc.com/v1/link_intents"
+        url = "https://api.fintoc.com/v1/link_intents"
 
-            payload = {
-                "product": "movements",
-                "country": "cl",
-                "holder_type": "individual"
-            }
-            headers = {
-                "accept": "application/json",
-                "Authorization": st.secrets["FINTOC_SECRET_KEY"],
-                "content-type": "application/json"
-            }
+        payload = {
+            "product": "movements",
+            "country": "cl",
+            "holder_type": "individual"
+        }
+        headers = {
+            "accept": "application/json",
+            "Authorization": st.secrets["FINTOC_SECRET_KEY"],
+            "content-type": "application/json"
+        }
 
-            response = requests.post(url, json=payload, headers=headers)
+        response = requests.post(url, json=payload, headers=headers)
 
-            widget_token = response.json()['widget_token']
-            components.html("""
-                    <script src="https://js.fintoc.com/v1/"></script>
-                    <script>
-                    function waitForElm(selector) {
-                        return new Promise(resolve => {
+        widget_token = response.json()['widget_token']
+        components.html("""
+                <script src="https://js.fintoc.com/v1/"></script>
+                <script>
+                function waitForElm(selector) {
+                    return new Promise(resolve => {
+                        if (document.querySelector(selector)) {
+                            return resolve(document.querySelector(selector));
+                        }
+
+                        const observer = new MutationObserver(mutations => {
                             if (document.querySelector(selector)) {
-                                return resolve(document.querySelector(selector));
+                                resolve(document.querySelector(selector));
+                                observer.disconnect();
                             }
-
-                            const observer = new MutationObserver(mutations => {
-                                if (document.querySelector(selector)) {
-                                    resolve(document.querySelector(selector));
-                                    observer.disconnect();
-                                }
-                            });
-
-                            observer.observe(document.body, {
-                                childList: true,
-                                subtree: true
-                            });
                         });
-                    }
+
+                        observer.observe(document.body, {
+                            childList: true,
+                            subtree: true
+                        });
+                    });
+                }
+                
+                window.onload = () => {
+                    waitForElm('#fintoc-widget-id').then((elm) => {
+                        console.log('Fintoc iframe loaded!');
+                        elm.src = elm.src.replace("null", "*")
+                    });
+                    window.fintocWidget = Fintoc.create({
+                    publicKey: '<PUBLIC_KEY>',
+                    widgetToken: '<WIDGET_TOKEN>',
+                    onSuccess: (link) => {
+                        console.log('Success!');
+                        window.top.stBridges.send('fintoc-bridge', link)
+                    },
+                    onExit: () => {
+                        console.log('Widget closing!');
+                    },
+                    onEvent: (event) => {
+                        console.log('An event just happened!');
+                        console.log(event);
+                    },
+                    });
                     
-                    window.onload = () => {
-                        waitForElm('#fintoc-widget-id').then((elm) => {
-                            console.log('Fintoc iframe loaded!');
-                            elm.src = elm.src.replace("null", "*")
-                        });
-                        window.fintocWidget = Fintoc.create({
-                        publicKey: '<PUBLIC_KEY>',
-                        widgetToken: '<WIDGET_TOKEN>',
-                        onSuccess: (link) => {
-                            console.log('Success!');
-                            window.top.stBridges.send('fintoc-bridge', link)
-                        },
-                        onExit: () => {
-                            console.log('Widget closing!');
-                        },
-                        onEvent: (event) => {
-                            console.log('An event just happened!');
-                            console.log(event);
-                        },
-                        });
-                        
-                        window.fintocWidget.open()
+                    window.fintocWidget.open()
 
-                    };
-                    </script>""".replace("<PUBLIC_KEY>", st.secrets["FINTOC_PUBLIC_KEY"]).replace("<WIDGET_TOKEN>", widget_token),  height = 750)
+                };
+                </script>""".replace("<PUBLIC_KEY>", st.secrets["FINTOC_PUBLIC_KEY"]).replace("<WIDGET_TOKEN>", widget_token),  height = 750)
 
 
 # Ask the user to enter their OpenAI API key
