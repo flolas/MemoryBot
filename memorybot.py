@@ -91,10 +91,7 @@ st.caption('Los datos serán eliminados una vez que cierres el explorador, si qu
 open_modal = st.button("Conectar mis cuentas bancarias 🔌 🏦", disabled = not agree)
 
 
-data = stb.bridge("fintoc-bridge")
-data_events = stb.bridge("fintoc-bridge-events")
-
-if data:
+if stb.bridge("fintoc-bridge"):
     if data['id'] not in st.session_state["fintoc_links"] or len(st.session_state["fintoc_links"][data['id']]) < 4:
         st.session_state["fintoc_links"][data['id']] = {
             "exchange_token": data['exchangeToken'],
