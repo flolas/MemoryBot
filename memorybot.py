@@ -38,6 +38,8 @@ if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
 if "fintoc_links" not in st.session_state:
     st.session_state["fintoc_links"] = {}
+if "fintoc_widget" not in st.session_state:
+    st.session_state["fintoc_widget"] = False
 
 # Define function to get user input
 def get_text():
@@ -158,6 +160,8 @@ if open_modal:
     
 if modal.is_open():
     with modal.container():
+        if st.session_state["fintoc_widget"] is False:
+            st.session_state["fintoc_widget"] = True
             url = "https://api.fintoc.com/v1/link_intents"
 
             payload = {
