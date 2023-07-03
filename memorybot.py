@@ -67,20 +67,7 @@ def new_chat():
     st.session_state["input"] = ""
     st.session_state.entity_memory.entity_store = {}
     st.session_state.entity_memory.buffer.clear()
-
-# Set up sidebar with various options
-with st.sidebar.expander("🛠️ ", expanded=False):
-    # Option to preview memory store
-    if st.checkbox("Preview memory store"):
-        with st.expander("Memory-Store", expanded=False):
-            st.session_state.entity_memory.store
-    # Option to preview memory buffer
-    if st.checkbox("Preview memory buffer"):
-        with st.expander("Bufffer-Store", expanded=False):
-            st.session_state.entity_memory.buffer
-    MODEL = st.selectbox(label='Model', options=['gpt-3.5-turbo','text-davinci-003','text-davinci-002','code-davinci-002'])
-    K = st.number_input(' (#)Summary of prompts to consider',min_value=3,max_value=1000)
-# Set up the Streamlit app layout
+    
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
@@ -227,35 +214,24 @@ def retrieve_data():
         st.session_state["fintoc_data"]
 st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
 
-# Ask the user to enter their OpenAI API key
-API_O = st.sidebar.text_input("API-KEY", type="password")
-
-# Session state storage would be ideal
-if API_O:
+def initialize_langchain_agent():
     # Create an OpenAI instance
     llm = OpenAI(temperature=0,
-                openai_api_key=API_O, 
-                model_name=MODEL, 
+                openai_api_key=st.secrets["OPENAI_API_TOKEN"], 
+                model_name='gpt-3.5-turbo', 
                 verbose=False) 
 
 
     # Create a ConversationEntityMemory object if not already created
     if 'entity_memory' not in st.session_state:
-            st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=K )
+            st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
         
         # Create the ConversationChain object with the specified configuration
     Conversation = ConversationChain(
             llm=llm, 
             prompt=ENTITY_MEMORY_CONVERSATION_TEMPLATE,
             memory=st.session_state.entity_memory
-        )  
-else:
-    st.sidebar.warning('API key required to try this app.The API key is not stored in any form.')
-    # st.stop()
-
-
-# Add a button to start a new chat
-st.sidebar.button("New Chat", on_click = new_chat, type='primary')
+        ) 
 
 # Get the user input
 user_input = get_text()
@@ -265,28 +241,3 @@ if user_input:
     output = Conversation.run(input=user_input)  
     st.session_state.past.append(user_input)  
     st.session_state.generated.append(output)  
-
-# Allow to download as well
-download_str = []
-# Display the conversation history using an expander, and allow the user to download it
-with st.expander("Conversation", expanded=True):
-    for i in range(len(st.session_state['generated'])-1, -1, -1):
-        st.info(st.session_state["past"][i],icon="🧐")
-        st.success(st.session_state["generated"][i], icon="🤖")
-        download_str.append(st.session_state["past"][i])
-        download_str.append(st.session_state["generated"][i])
-    
-    # Can throw error - requires fix
-    download_str = '\n'.join(download_str)
-    if download_str:
-        st.download_button('Download',download_str)
-
-# Display stored conversation sessions in the sidebar
-for i, sublist in enumerate(st.session_state.stored_session):
-        with st.sidebar.expander(label= f"Conversation-Session:{i}"):
-            st.write(sublist)
-
-# Allow the user to clear all stored conversation sessions
-if st.session_state.stored_session:   
-    if st.sidebar.checkbox("Clear-all"):
-        del st.session_state.stored_session
