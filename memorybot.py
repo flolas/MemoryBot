@@ -78,7 +78,6 @@ def new_chat():
     st.session_state.entity_memory.buffer.clear()
 
 def initialize_langchain_agent():
-    new_chat()
     # Create an OpenAI instance
     llm = OpenAI(temperature=0.01,
                 openai_api_key=st.secrets["OPENAI_API_KEY"], 
@@ -88,7 +87,6 @@ def initialize_langchain_agent():
     # Create a ConversationEntityMemory object if not already created
     if 'entity_memory' not in st.session_state:
             st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
-        
     # Create the ConversationChain object with the specified configuration
     return ConversationChain(
             llm=llm, 
