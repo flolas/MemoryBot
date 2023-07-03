@@ -46,7 +46,7 @@ if "fintoc_links" not in st.session_state:
 if "langchain_init" not in st.session_state:
     st.session_state["langchain_init"] = False
 if "fintoc_data" not in st.session_state:
-    st.session_state["fintoc_data"] = None
+    st.session_state["fintoc_data"] = []
 # Define function to get user input
 def get_text():
     """
