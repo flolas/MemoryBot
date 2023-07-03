@@ -41,6 +41,24 @@ if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
 if "fintoc_links" not in st.session_state:
     st.session_state["fintoc_links"] = {}
+    
+def initialize_langchain_agent():
+    # Create an OpenAI instance
+    llm = OpenAI(temperature=0.01,
+                openai_api_key=st.secrets["OPENAI_API_TOKEN"], 
+                model_name='gpt-3.5-turbo', 
+                verbose=False) 
+
+    # Create a ConversationEntityMemory object if not already created
+    if 'entity_memory' not in st.session_state:
+            st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
+        
+    # Create the ConversationChain object with the specified configuration
+    return ConversationChain(
+            llm=llm, 
+            prompt=ENTITY_MEMORY_CONVERSATION_TEMPLATE,
+            memory=st.session_state.entity_memory
+        )
 
 # Define function to get user input
 def get_text():
@@ -220,24 +238,6 @@ def retrieve_data():
     if debug:
         st.session_state["fintoc_data"]
 st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
-
-def initialize_langchain_agent():
-    # Create an OpenAI instance
-    llm = OpenAI(temperature=0.01,
-                openai_api_key=st.secrets["OPENAI_API_TOKEN"], 
-                model_name='gpt-3.5-turbo', 
-                verbose=False) 
-
-    # Create a ConversationEntityMemory object if not already created
-    if 'entity_memory' not in st.session_state:
-            st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
-        
-    # Create the ConversationChain object with the specified configuration
-    return ConversationChain(
-            llm=llm, 
-            prompt=ENTITY_MEMORY_CONVERSATION_TEMPLATE,
-            memory=st.session_state.entity_memory
-        )
 
 # Get the user input
 user_input = get_text()
