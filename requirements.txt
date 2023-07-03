@@ -9,4 +9,4 @@ thefuzz
 plotly
 pandasai
 astor
-dotenv
+python-dotenv
