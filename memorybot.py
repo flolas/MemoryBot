@@ -12,7 +12,7 @@ import time
 import requests
 import numpy as np
 import plotly.graph_objects as px
-
+import pandasai.llm.openai as pandasai_oa
 from streamlit_modal import Modal
 import st_bridge as stb
 
@@ -85,6 +85,7 @@ def initialize_langchain_agent():
                 openai_api_key=st.secrets["OPENAI_API_KEY"], 
                 model_name='gpt-3.5-turbo', 
                 verbose=False) 
+    llm = pandasai_oa.OpenAI(api_token=st.secrets["OPENAI_API_KEY"])
 
     # Create a ConversationEntityMemory object if not already created
     if 'entity_memory' not in st.session_state:
