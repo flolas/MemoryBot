@@ -41,11 +41,11 @@ if "stored_session" not in st.session_state:
     st.session_state["stored_session"] = []
 if "fintoc_links" not in st.session_state:
     st.session_state["fintoc_links"] = {}
-    
+
 def initialize_langchain_agent():
     # Create an OpenAI instance
     llm = OpenAI(temperature=0.01,
-                openai_api_key=st.secrets["OPENAI_API_TOKEN"], 
+                openai_api_key=st.secrets["OPENAI_API_KEY"], 
                 model_name='gpt-3.5-turbo', 
                 verbose=False) 
 
