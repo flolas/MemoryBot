@@ -86,6 +86,8 @@ with st.sidebar.expander("🛠️ ", expanded=False):
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
+# Carga Widget Fintoc
+modal = Modal("", "fintoc-modal")
 
 agree = st.checkbox('Doy mi consentimiento para el tratamiento de mis datos en radiografiafinanciera.cl (esta pagina), proveedores Fintoc y OpenAI con la finalidad de que se me entregue una asesoría y diagnotisco de mis finanzas.')
 st.caption('Los datos serán eliminados una vez que cierres el explorador, si quieres volver a utilizar la herramienta debes ingresar nuevamente tus datos bancarios.')
@@ -110,6 +112,8 @@ if data is not None:
         st.session_state["fintoc_links"][data['id']]['bank'] = response['institution']['name']
         st.session_state["fintoc_links"][data['id']]['holder_id'] = response['holder_id']
         data = None
+        modal.close()
+
     #st.session_state["fintoc_links"]
 st.write('---')
 
@@ -154,8 +158,6 @@ def retrieve_data():
 
 st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
 
-# Carga Widget Fintoc
-modal = Modal("", "fintoc-modal")
 if open_modal:
     modal.open()
     
