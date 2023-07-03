@@ -42,24 +42,6 @@ if "stored_session" not in st.session_state:
 if "fintoc_links" not in st.session_state:
     st.session_state["fintoc_links"] = {}
 
-def initialize_langchain_agent():
-    # Create an OpenAI instance
-    llm = OpenAI(temperature=0.01,
-                openai_api_key=st.secrets["OPENAI_API_KEY"], 
-                model_name='gpt-3.5-turbo', 
-                verbose=False) 
-
-    # Create a ConversationEntityMemory object if not already created
-    if 'entity_memory' not in st.session_state:
-            st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
-        
-    # Create the ConversationChain object with the specified configuration
-    return ConversationChain(
-            llm=llm, 
-            prompt=ENTITY_MEMORY_CONVERSATION_TEMPLATE,
-            memory=st.session_state.entity_memory
-        )
-
 # Define function to get user input
 def get_text():
     """
@@ -88,7 +70,27 @@ def new_chat():
     st.session_state["input"] = ""
     st.session_state.entity_memory.entity_store = {}
     st.session_state.entity_memory.buffer.clear()
-    
+
+def initialize_langchain_agent():
+    new_chat()
+    # Create an OpenAI instance
+    llm = OpenAI(temperature=0.01,
+                openai_api_key=st.secrets["OPENAI_API_KEY"], 
+                model_name='gpt-3.5-turbo', 
+                verbose=False) 
+
+    # Create a ConversationEntityMemory object if not already created
+    if 'entity_memory' not in st.session_state:
+            st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
+        
+    # Create the ConversationChain object with the specified configuration
+    return ConversationChain(
+            llm=llm, 
+            prompt=ENTITY_MEMORY_CONVERSATION_TEMPLATE,
+            memory=st.session_state.entity_memory,
+            verbose = True,
+        )
+
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
 
