@@ -325,7 +325,6 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
 
     return {
         'monthly_ingress_egress' : final_view_monthly_ingress_egress,
-        'monthly_ingress' : final_df_ingress[['year_month', 'Total']],
         'monthly_spendings' : final_df_spendings[['year_month', 'Total', 'Total_rolling_median']],
         'monthly_savings' : final_df_savings[['year_month', 'median_amount']],
         'monthly_income' : final_df_income[['year_month', 'median_amount']],
