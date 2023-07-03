@@ -226,7 +226,8 @@ if len(st.session_state["fintoc_data"]) > 0:
     st.session_state["langchain_init"] = True
 
 def retrieve_data():
-    with st.spinner('Obteniendo movimientos...'):
+    with st.chat_message("assistant"):
+        st.write("Obteniendo tu información bancaria...")
         link_tokens_available = []
         for link_id, link in st.session_state["fintoc_links"].items():
             link_tokens_available.append(link["link_token"])
@@ -237,29 +238,25 @@ def retrieve_data():
         since="2022-01-01",
         until="2023-07-01",
         )
-        time.sleep(5)
-    st.success('Done!')
-    if debug:
-        st.session_state["fintoc_data"]
 st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
-
-with st.container():
-    prompt = st.chat_input("Escribe algo...")
-    with st.chat_message("assistant"):
-        st.write("Hola 👋!, para poder entregarte asesoría financiera, primero debes agregar cuentas")
-        if st.session_state["langchain_init"]:
-            st.write("Muy bien! Ya puedes hacerme preguntas.")
-            #st.write("Partiré con algunos datos interesantes que encontré!")
-    if prompt:
-        output = langchain_agent_chain.run(input=prompt)  
-        st.session_state.past.append(prompt)  
-        st.session_state.generated.append(output) 
-        for idx, user_message in enumerate(st.session_state.past):
-            with st.chat_message("user"):
-                st.write(user_message)
-            with st.chat_message("assistant"):
-                try:
-                    st.write(st.session_state.generated[idx])
-                except:
-                    pass
-                #st.line_chart(np.random.randn(30, 3))
+if debug:
+    st.session_state["fintoc_data"]
+prompt = st.chat_input("Preguntame algo relacionado a tu situacion financiera...")
+with st.chat_message("assistant"):
+    st.write("Hola 👋!, para poder entregarte asesoría financiera, primero debes agregar cuentas")
+    if st.session_state["langchain_init"]:
+        st.write("Muy bien! Ya terminé de obtener tu información desde tus bancos.")
+        #st.write("Partiré con algunos datos interesantes que encontré!")
+if prompt:
+    output = langchain_agent_chain.run(input=prompt)  
+    st.session_state.past.append(prompt)  
+    st.session_state.generated.append(output) 
+    for idx, user_message in enumerate(st.session_state.past):
+        with st.chat_message("user"):
+            st.write(user_message)
+        with st.chat_message("assistant"):
+            try:
+                st.write(st.session_state.generated[idx])
+            except:
+                pass
+            #st.line_chart(np.random.randn(30, 3))
