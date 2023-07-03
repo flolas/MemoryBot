@@ -253,12 +253,12 @@ with st.container():
 
             plot = px.Figure(data=[px.Bar(
                 name = 'Ingress',
-                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month.astype(str).values),
+                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month.apply(lambda x:' '+x).values),
                 y = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].ingress.values),
             ),
                                 px.Bar(
                 name = 'Egress',
-                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month.astype(str).values),
+                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month.apply(lambda x:' '+x).values),
                 y = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].egress.values),
             )
             ])
