@@ -232,12 +232,12 @@ def initialize_langchain_agent():
     if 'entity_memory' not in st.session_state:
             st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
         
-        # Create the ConversationChain object with the specified configuration
+    # Create the ConversationChain object with the specified configuration
     return ConversationChain(
             llm=llm, 
             prompt=ENTITY_MEMORY_CONVERSATION_TEMPLATE,
             memory=st.session_state.entity_memory
-        ) 
+        )
 
 # Get the user input
 user_input = get_text()
