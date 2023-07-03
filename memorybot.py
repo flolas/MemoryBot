@@ -88,8 +88,8 @@ def initialize_langchain_agent():
     llm = pandasai_oa.OpenAI(api_token=st.secrets["OPENAI_API_KEY"])
 
     # Create a ConversationEntityMemory object if not already created
-    if 'entity_memory' not in st.session_state:
-            st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
+    #if 'entity_memory' not in st.session_state:
+    #        st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
     # Create the ConversationChain object with the specified configuration
     pandas_ai = PandasAI(llm)
     return pandas_ai
