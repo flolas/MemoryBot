@@ -256,7 +256,7 @@ with st.container():
         st.session_state.generated.append(output) 
         for idx, user_message in enumerate(st.session_state.past):
             with st.chat_message("user"):
-                st.write("user_message")
+                st.write(user_message)
             with st.chat_message("assistant"):
                 try:
                     st.write(st.session_state.generated[idx])
