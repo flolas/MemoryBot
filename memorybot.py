@@ -240,7 +240,11 @@ def retrieve_data():
     if debug:
         st.session_state["fintoc_data"]
 st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
-
+with st.container():
+    with st.chat_message("user"):
+        st.write("Hello 👋")
+        st.line_chart(np.random.randn(30, 3))
+    
 # Get the user input
 user_input = get_text()
 
