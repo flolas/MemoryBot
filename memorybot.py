@@ -17,6 +17,9 @@ import st_bridge as stb
 import streamlit.components.v1 as components
 import uuid
 
+import openai
+openai.organization = st.secrets["OPENAI_ORGANIZATION"]
+
 from langchain.chains import ConversationChain
 from langchain.chains.conversation.memory import ConversationEntityMemory
 from langchain.chains.conversation.prompt import ENTITY_MEMORY_CONVERSATION_TEMPLATE
@@ -196,6 +199,10 @@ else:
     st.write("No tienes ninguna cuenta conectada.")
 st.write('---')
 
+if len(st.session_state["fintoc_data"]) > 0:
+    langchain_agent_chain = initialize_langchain_agent()
+    st.write("Ya puedes conversar.")
+
 def retrieve_data():
     with st.spinner('Obteniendo movimientos...'):
         link_tokens_available = []
@@ -216,18 +223,17 @@ st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_
 
 def initialize_langchain_agent():
     # Create an OpenAI instance
-    llm = OpenAI(temperature=0,
+    llm = OpenAI(temperature=0.01,
                 openai_api_key=st.secrets["OPENAI_API_TOKEN"], 
                 model_name='gpt-3.5-turbo', 
                 verbose=False) 
-
 
     # Create a ConversationEntityMemory object if not already created
     if 'entity_memory' not in st.session_state:
             st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
         
         # Create the ConversationChain object with the specified configuration
-    Conversation = ConversationChain(
+    return ConversationChain(
             llm=llm, 
             prompt=ENTITY_MEMORY_CONVERSATION_TEMPLATE,
             memory=st.session_state.entity_memory
@@ -238,6 +244,6 @@ user_input = get_text()
 
 # Generate the output using the ConversationChain object and the user input, and add the input/output to the session
 if user_input:
-    output = Conversation.run(input=user_input)  
+    output = langchain_agent_chain.run(input=user_input)  
     st.session_state.past.append(user_input)  
     st.session_state.generated.append(output)  
