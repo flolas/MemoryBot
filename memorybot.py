@@ -91,7 +91,7 @@ def initialize_langchain_agent():
             st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
     # Create the ConversationChain object with the specified configuration
     pandas_ai = PandasAI(llm)
-    return lambda x: pandas_ai(list(st.session_state["fintoc_data"].values()), x)
+    return pandas_ai
     return ConversationChain(
             llm=llm, 
             prompt=ENTITY_MEMORY_CONVERSATION_TEMPLATE,
@@ -268,7 +268,8 @@ with st.container():
             ])
             st.plotly_chart(plot, theme="streamlit", use_container_width=True)
     if prompt:
-        output = langchain_agent_chain(prompt)
+        pandas_ai = langchain_agent_chain()
+        output = pandas_ai(list(st.session_state["fintoc_data"].values()), prompt)
         st.session_state.past.append(prompt)  
         st.session_state.generated.append(output) 
         for idx, user_message in enumerate(st.session_state.past):
