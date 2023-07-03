@@ -95,7 +95,7 @@ data = stb.bridge("fintoc-bridge")
 data_events = stb.bridge("fintoc-bridge-events")
 
 if data:
-    if data['id'] not in st.session_state["fintoc_links"]:
+    if data['id'] not in st.session_state["fintoc_links"] or len(st.session_state["fintoc_links"][data['id']]) < 4:
         st.session_state["fintoc_links"][data['id']] = {
             "exchange_token": data['exchangeToken'],
         }
