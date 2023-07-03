@@ -152,6 +152,7 @@ def retrieve_data():
         until="2023-07-01",
         )
         time.sleep(5)
+        st.session_state["fintoc_data"]
     st.success('Done!')
 
 st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
