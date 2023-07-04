@@ -27,7 +27,7 @@ def get_langchain_agent(df, open_api_key):
 
     def f_data_analyst_agent(prompt):
         try:
-            return data_analyst_agent.run(df, prompt
+            return data_analyst_agent.run(df, prompt)
         except Exception as e:
             return f"Please try with another question, I cant answer that because of '{e}'"
         
