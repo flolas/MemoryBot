@@ -19,7 +19,7 @@ def get_langchain_agent(df, open_api_key):
 
     
     tools = load_tools(
-        ["llm-math"], 
+        ["llm-math", "human"], 
         llm=llm
     )
 
@@ -29,7 +29,7 @@ def get_langchain_agent(df, open_api_key):
         try:
             return data_analyst_agent.run(df, prompt)
         except Exception as e:
-            return f"Please try with another question, I cant answer that because of '{e}'"
+            return f"Please try again with another question, I cant answer that because of '{e}'"
         
     data_analyst_agent_tool = Tool(
         name='AskFinanceDataQuestion',
@@ -51,10 +51,10 @@ def get_langchain_agent(df, open_api_key):
 
     agent_chain = initialize_agent(tools,
                                    llm,
-                                   agent=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION,
+                                   agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
                                    verbose=True,
                                    memory=ConversationBufferMemory(return_messages=True, memory_key="chat_history"),
-                                   handle_parsing_errors="Check your output and make sure it conforms!",
+                                   handle_parsing_errors=True,
                                    max_iterations=5,
                                    prefix = PREFIX,
                                    )
