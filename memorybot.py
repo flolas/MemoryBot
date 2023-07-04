@@ -77,9 +77,7 @@ def new_chat():
     st.session_state["stored_session"].append(save)
     st.session_state["generated"] = []
     st.session_state["past"] = []
-    st.session_state["input"] = ""
-    st.session_state.entity_memory.entity_store = {}
-    st.session_state.entity_memory.buffer.clear()    
+    st.session_state["input"] = "" 
 
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
