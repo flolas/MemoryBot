@@ -15,6 +15,7 @@ import plotly.graph_objects as px
 import pandasai.llm.openai as pandasai_oa
 from streamlit_modal import Modal
 import st_bridge as stb
+from langchain.callbacks import StreamlitCallbackHandler
 
 import streamlit.components.v1 as components
 import uuid
@@ -240,7 +241,8 @@ with st.container():
 
     if prompt and st.session_state["langchain_init"] is not None:
         agent = st.session_state["langchain_init"]
-        output = agent.run(prompt)
+        st_callback = StreamlitCallbackHandler(st.container())
+        output = agent.run(prompt, callbacks=[st_callback])
         st.session_state.past.append(prompt)  
         st.session_state.generated.append(output) 
 
