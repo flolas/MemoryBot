@@ -48,7 +48,7 @@ if "fintoc_links" not in st.session_state:
 if "langchain_init" not in st.session_state:
     st.session_state["langchain_init"] = False
 if "fintoc_data" not in st.session_state:
-    st.session_state["fintoc_data"] = {}
+    st.session_state["fintoc_data"] = None
 
 # Define function to get user input
 def get_text():
@@ -228,7 +228,7 @@ else:
     st.write("No tienes ninguna cuenta conectada.")
 st.write('---')
 
-if len(st.session_state["fintoc_data"]) > 0:
+if st.session_state["fintoc_data"]):
     langchain_agent_chain = initialize_langchain_agent()
     st.session_state["langchain_init"] = True
 
@@ -247,6 +247,7 @@ def retrieve_data():
         )
 st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
 if debug:
+    st.write("Se calcularon los siguientes datos")
     st.session_state["fintoc_data"]
 with st.container():
     prompt = st.chat_input("Preguntame algo relacionado a tu situacion financiera...")
@@ -255,19 +256,7 @@ with st.container():
         if st.session_state["langchain_init"]:
             st.write("Muy bien! Ya terminé de obtener tu información desde tus bancos.")
             st.write("Partiré con algunos datos interesantes que encontré!")
-
-            plot = px.Figure(data=[px.Bar(
-                name = 'Ingress',
-                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month.apply(lambda x:' '+x).values),
-                y = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].ingress.values),
-            ),
-                                px.Bar(
-                name = 'Egress',
-                x = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].reset_index().year_month.apply(lambda x:' '+x).values),
-                y = list(st.session_state["fintoc_data"]["monthly_ingress_egress"].egress.values),
-            )
-            ])
-            st.plotly_chart(plot, theme="streamlit", use_container_width=True)
+            
     if prompt:
         pandas_ai = initialize_langchain_agent()
         output = pandas_ai.run(st.session_state["fintoc_data"], prompt)
