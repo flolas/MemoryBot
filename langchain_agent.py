@@ -51,7 +51,7 @@ def get_langchain_agent(df, open_api_key):
 
     agent_chain = initialize_agent(tools,
                                    llm,
-                                   agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+                                   agent=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION,
                                    verbose=True,
                                    memory=ConversationBufferMemory(return_messages=True, memory_key="chat_history"),
                                    handle_parsing_errors="Check your output and make sure it conforms!",
