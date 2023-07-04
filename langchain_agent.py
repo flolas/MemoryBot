@@ -54,9 +54,9 @@ def get_langchain_agent(df, open_api_key):
                                    memory=memory,
                                    agent_kwargs={
                                         'prefix': PREFIX,
-                                        'handle_parsing_errors': True,
                                         'verbose': True,
-                                    }
+                                    },
+                                   handle_parsing_errors="Check your output and make sure it conforms!"
                                    )
 
     return agent_chain
