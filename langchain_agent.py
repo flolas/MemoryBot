@@ -49,9 +49,6 @@ def get_langchain_agent(df, open_api_key):
     )
     tools.append(data_analyst_agent_tool)
 
-
-    memory = ConversationBufferMemory(memory_key="chat_history")
-
     agent_chain = initialize_agent(tools,
                                    llm,
                                    agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
