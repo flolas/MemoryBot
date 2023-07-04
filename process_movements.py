@@ -299,7 +299,7 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
                                                                 'category',
                                                                 'product',
                                                                 'flow']].sort_values(by=['category', 'flow'])
-    df_mortgage = final_movements_df[(final_movements_df.flow == 'OUT')&
+    df_loans = final_movements_df[(final_movements_df.flow == 'OUT')&
                    (final_movements_df.category.isin(['Créditos', 'Pago de Tarjeta de Crédito']))][['amount',
                                                                'year_month',
                                                                'post_date',
@@ -311,7 +311,7 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
 
     final_df_income = income_events_df[['amount', 'median_amount', 'raise_event_amount']].reset_index(False)
 
-    final_df_mortgage = get_df_with_numerics_rolling_median(get_pivoted_data(df_mortgage))
+    final_df_loans = get_df_with_numerics_rolling_median(get_pivoted_data(df_loans))
 
     final_df_spendings = get_df_with_numerics_rolling_median(get_pivoted_data(df_spendings))
 
@@ -320,13 +320,13 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
     final_df_ingress = get_df_with_numerics_rolling_median(get_pivoted_data(df_ingress))
     final_df_egress = get_df_with_numerics_rolling_median(get_pivoted_data(df_egress))
     
-    final_view_monthly = final_view_monthly_ingress\
-        .merge(final_view_monthly_egress, on = 'year_month')\
-        .merge(final_view_monthly_spendings[['year_month', 'Total', 'Total_rolling_median']], on = 'year_month')\
-        .merge(final_view_monthly_savings[['year_month', 'median_amount']], on = 'year_month')\
-        .merge(final_view_monthly_income[['year_month', 'median_amount']], on = 'year_month')\
-        .merge(final_view_monthly_mortgage[['year_month', 'Créditos_rolling_median']], on = 'year_month')\
-        .merge(final_view_monthly_credit_card_usage[['year_month', 'Pago de Tarjeta de Crédito_rolling_median']], on = 'year_month')
+    final_view_monthly = final_df_ingress[['year_month', 'Total']]\
+        .merge(final_df_egress[['year_month', 'Total']], on = 'year_month')\
+        .merge(final_df_spendings[['year_month', 'Total', 'Total_rolling_median']], on = 'year_month')\
+        .merge(final_df_savings[['year_month', 'median_amount']], on = 'year_month')\
+        .merge(final_df_income[['year_month', 'median_amount']], on = 'year_month')\
+        .merge(final_df_loans[['year_month', 'Créditos_rolling_median']], on = 'year_month')\
+        .merge(final_df_spendings[['year_month', 'Pago de Tarjeta de Crédito_rolling_median']], on = 'year_month')
     
     final_view_monthly.columns = [
         'year_month',
@@ -336,7 +336,7 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
         'spendings_median',
         'savings_median',
         'income_median',
-        'mortgage_median',
+        'loans_payments_median',
         'credit_card_usage_median',
     ]
     
