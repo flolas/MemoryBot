@@ -31,6 +31,8 @@ from pandasai import PandasAI
 
 from process_movements import get_analytical_dataframes
 
+from langchain_agent import get_langchain_agent
+
 # Set Streamlit page configuration
 st.set_page_config(page_title='Radiografía Financiera', layout='wide')
 
@@ -77,23 +79,7 @@ def new_chat():
     st.session_state["past"] = []
     st.session_state["input"] = ""
     st.session_state.entity_memory.entity_store = {}
-    st.session_state.entity_memory.buffer.clear()
-
-def initialize_langchain_agent():
-    # Create an OpenAI instance
-    llm = OpenAI(temperature=0.01,
-                openai_api_key=st.secrets["OPENAI_API_KEY"], 
-                model_name='gpt-3.5-turbo', 
-                verbose=False) 
-    llm = pandasai_oa.OpenAI(api_token=st.secrets["OPENAI_API_KEY"])
-
-    # Create a ConversationEntityMemory object if not already created
-    #if 'entity_memory' not in st.session_state:
-    #        st.session_state.entity_memory = ConversationEntityMemory(llm=llm, k=10)
-    # Create the ConversationChain object with the specified configuration
-    pandas_ai = PandasAI(llm)
-    return pandas_ai
-    
+    st.session_state.entity_memory.buffer.clear()    
 
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
@@ -224,7 +210,7 @@ else:
 st.write('---')
 
 if st.session_state["fintoc_data"] is not None:
-    st.session_state["langchain_init"] = initialize_langchain_agent(st.session_state["fintoc_data"], st.secrets["OPENAI_API_KEY"])
+    st.session_state["langchain_init"] = get_langchain_agent(st.session_state["fintoc_data"], st.secrets["OPENAI_API_KEY"])
 
 def retrieve_data():
     with st.chat_message("assistant"):
