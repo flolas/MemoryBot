@@ -228,7 +228,7 @@ else:
     st.write("No tienes ninguna cuenta conectada.")
 st.write('---')
 
-if st.session_state["fintoc_data"]):
+if st.session_state["fintoc_data"]:
     langchain_agent_chain = initialize_langchain_agent()
     st.session_state["langchain_init"] = True
 
@@ -256,7 +256,7 @@ with st.container():
         if st.session_state["langchain_init"]:
             st.write("Muy bien! Ya terminé de obtener tu información desde tus bancos.")
             st.write("Partiré con algunos datos interesantes que encontré!")
-            
+
     if prompt:
         pandas_ai = initialize_langchain_agent()
         output = pandas_ai.run(st.session_state["fintoc_data"], prompt)
