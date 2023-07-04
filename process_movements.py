@@ -342,5 +342,4 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
     
     final_view_monthly = final_view_monthly.fillna(0).astype(int).set_index('year_month')
 
-
     return final_view_monthly
