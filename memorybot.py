@@ -221,6 +221,7 @@ def retrieve_data():
         if st.session_state["fintoc_data"] is not None:
             st.session_state["fintoc_data"]  = None
             st.session_state["langchain_init"] = None
+            new_chat()
         st.session_state["fintoc_data"] = get_analytical_dataframes(
         fintoc_secret_key =  st.secrets["FINTOC_SECRET_KEY"],
         link_tokens = link_tokens_available,
