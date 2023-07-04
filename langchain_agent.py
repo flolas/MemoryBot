@@ -61,7 +61,8 @@ def get_langchain_agent(df, open_api_key):
                                         'prefix': PREFIX,
                                         'verbose': True,
                                     },
-                                   handle_parsing_errors="Check your output and make sure it conforms!"
+                                   handle_parsing_errors="Check your output and make sure it conforms!",
+                                   max_iterations=5,
                                    )
 
     return agent_chain
