@@ -26,7 +26,7 @@ def get_langchain_agent(df, open_api_key):
     data_analyst_agent = PandasAI(pandasai_oa.OpenAI(api_token=open_api_key))
     data_analyst_agent_tool = Tool(
         name='AskToDataAnalystAgent',
-        func=lambda x: data_analyst_agent.run(df, prompt),
+        func=lambda prompt: data_analyst_agent.run(df, prompt),
         description='''Instructions
         - Useful for asking questions about the financial data of the person. The data analyst 
           has access to a pandas dataframe for analysis with the following columns:
