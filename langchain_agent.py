@@ -34,7 +34,7 @@ def get_langchain_agent(df, open_api_key):
     data_analyst_agent_tool = Tool(
         name='AskFinanceDataQuestion',
         func=f_data_analyst_agent,
-        description='''Make a question to an financial data analyst about the financial data of the person. You
+        description='''Make a question to an financial data analyst about the financial data of the person. For this tool you must formulate closed-ended questions encompassing all the necessary context.
         The data analyst has access to a pandas dataframe which has financial records of the person helping you with the following columns:
             - year_month (index)
             - ingress
