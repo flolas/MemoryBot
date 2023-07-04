@@ -3,7 +3,7 @@ from langchain.agents import Tool
 from langchain.agents import load_tools
 from langchain.agents import AgentType
 from langchain.memory import ConversationBufferMemory
-from langchain import OpenAI
+from langchain.chat_models import ChatOpenAI
 from prompt import PREFIX
 from langchain.utilities import SerpAPIWrapper
 from langchain.agents import initialize_agent
@@ -12,7 +12,7 @@ import pandasai.llm.openai as pandasai_oa
 
 def get_langchain_agent(df, open_api_key):
 
-    llm = OpenAI(temperature=0.01,
+    llm = ChatOpenAI(temperature=0.01,
                 openai_api_key=open_api_key, 
                 model_name='gpt-3.5-turbo', 
                 verbose=True) 
@@ -54,7 +54,7 @@ def get_langchain_agent(df, open_api_key):
 
     agent_chain = initialize_agent(tools,
                                    llm,
-                                   agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION,
+                                   agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
                                    verbose=True,
                                    memory=memory,
                                    agent_kwargs={
