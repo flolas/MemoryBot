@@ -320,14 +320,27 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
     final_df_ingress = get_df_with_numerics_rolling_median(get_pivoted_data(df_ingress))
     final_df_egress = get_df_with_numerics_rolling_median(get_pivoted_data(df_egress))
     
-    final_view_monthly_ingress_egress = final_df_ingress[['year_month', 'Total']].merge(final_df_egress[['year_month', 'Total']], on = 'year_month').set_index("year_month")
-    final_view_monthly_ingress_egress.columns = ['ingress', 'egress']
+    final_view_monthly = final_view_monthly_ingress\
+        .merge(final_view_monthly_egress, on = 'year_month')\
+        .merge(final_view_monthly_spendings[['year_month', 'Total', 'Total_rolling_median']], on = 'year_month')\
+        .merge(final_view_monthly_savings[['year_month', 'median_amount']], on = 'year_month')\
+        .merge(final_view_monthly_income[['year_month', 'median_amount']], on = 'year_month')\
+        .merge(final_view_monthly_mortgage[['year_month', 'Créditos_rolling_median']], on = 'year_month')\
+        .merge(final_view_monthly_credit_card_usage[['year_month', 'Pago de Tarjeta de Crédito_rolling_median']], on = 'year_month')
+    
+    final_view_monthly.columns = [
+        'year_month',
+        'ingress',
+        'egress',
+        'spendings',
+        'spendings_median',
+        'savings_median',
+        'income_median',
+        'mortgage_median',
+        'credit_card_usage_median',
+    ]
+    
+    final_view_monthly = final_view_monthly.fillna(0).astype(int).set_index('year_month')
 
-    return {
-        'monthly_ingress_egress' : final_view_monthly_ingress_egress,
-        'monthly_spendings' : final_df_spendings[['year_month', 'Total', 'Total_rolling_median']],
-        'monthly_savings' : final_df_savings[['year_month', 'median_amount']],
-        'monthly_income' : final_df_income[['year_month', 'median_amount']],
-        'monthly_mortgage' : final_df_mortgage[['year_month', 'Créditos_rolling_median']],
-        'monthly_credit_card_usage' : final_df_mortgage[['year_month', 'Pago de Tarjeta de Crédito_rolling_median']],
-    }
+
+    return final_view_monthly
