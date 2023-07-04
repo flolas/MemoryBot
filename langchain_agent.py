@@ -32,10 +32,10 @@ def get_langchain_agent(df, open_api_key):
             return f"Please try with another question, I cant answer that because of '{e}'"
         
     data_analyst_agent_tool = Tool(
-        name='AskToDataAnalystAgent',
+        name='AskFinanceDataQuestion',
         func=f_data_analyst_agent,
-        description='''Useful for asking questions about the financial data of the person. You
-        The data analyst has access to a pandas dataframe for analysis with the following columns:
+        description='''Make a question to an financial data analyst about the financial data of the person. You
+        The data analyst has access to a pandas dataframe which has financial records of the person helping you with the following columns:
             - year_month (index)
             - ingress
             - egress
