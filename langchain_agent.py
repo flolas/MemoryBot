@@ -34,7 +34,7 @@ def get_langchain_agent(df, open_api_key):
     data_analyst_agent_tool = Tool(
         name='AskToDataAnalystAgent',
         func=f_data_analyst_agent,
-        description='''Useful for asking questions about the financial data of the person.
+        description='''Useful for asking questions about the financial data of the person. You
         The data analyst has access to a pandas dataframe for analysis with the following columns:
             - year_month (index)
             - ingress
