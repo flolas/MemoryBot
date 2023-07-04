@@ -54,7 +54,7 @@ def get_langchain_agent(df, open_api_key):
                                    agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
                                    verbose=True,
                                    memory=ConversationSummaryBufferMemory(
-                                        llm=llm, max_token_limit=2048
+                                        llm=llm, max_token_limit=2048, memory_key="chat_history"
                                    ),
                                    agent_kwargs={
                                         'prefix': PREFIX,
