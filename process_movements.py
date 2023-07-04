@@ -340,6 +340,7 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
         'credit_card_usage_median',
     ]
     
-    final_view_monthly = final_view_monthly.fillna(0).astype(int).set_index('year_month')
+    final_view_monthly = final_view_monthly.fillna(0).astype(int)
+    final_view_monthly['year_month'] = final_view_monthly['year_month'].astype(str)
 
-    return final_view_monthly
+    return final_view_monthly.set_index('year_month')
