@@ -57,8 +57,8 @@ def get_langchain_agent(df, open_api_key):
                                    handle_parsing_errors=True,
                                    max_iterations=5,
                                    agent_kwargs={
-                                            prefix = PREFIX,
-                                            handle_parsing_errors=True,
+                                            prefix: PREFIX,
+                                            handle_parsing_errors:True,
                                        }
                                    )
 
