@@ -10,3 +10,4 @@ plotly
 pandasai
 astor
 python-dotenv
+tabulate
