@@ -209,7 +209,7 @@ else:
     st.write("No tienes ninguna cuenta conectada.")
 st.write('---')
 
-if st.session_state["fintoc_data"] is not None:
+if st.session_state["fintoc_data"] is not None and st.session_state["langchain_init"] is None:
     st.session_state["langchain_init"] = get_langchain_agent(st.session_state["fintoc_data"], st.secrets["OPENAI_API_KEY"])
 
 def retrieve_data():
@@ -243,7 +243,7 @@ with st.container():
         output = agent.run(prompt)
         st.session_state.past.append(prompt)  
         st.session_state.generated.append(output) 
-        
+
     if len(st.session_state.past) > 0:
         for idx, user_message in enumerate(st.session_state.past):
             with st.chat_message("user"):
