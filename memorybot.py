@@ -243,6 +243,8 @@ with st.container():
         output = agent.run(prompt)
         st.session_state.past.append(prompt)  
         st.session_state.generated.append(output) 
+        
+    if len(st.session_state.past) > 0:
         for idx, user_message in enumerate(st.session_state.past):
             with st.chat_message("user"):
                 st.write(user_message)
