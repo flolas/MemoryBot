@@ -46,7 +46,7 @@ if "stored_session" not in st.session_state:
 if "fintoc_links" not in st.session_state:
     st.session_state["fintoc_links"] = {}
 if "langchain_init" not in st.session_state:
-    st.session_state["langchain_init"] = False
+    st.session_state["langchain_init"] = None
 if "fintoc_data" not in st.session_state:
     st.session_state["fintoc_data"] = None
 
@@ -93,12 +93,7 @@ def initialize_langchain_agent():
     # Create the ConversationChain object with the specified configuration
     pandas_ai = PandasAI(llm)
     return pandas_ai
-    return ConversationChain(
-            llm=llm, 
-            prompt=ENTITY_MEMORY_CONVERSATION_TEMPLATE,
-            memory=st.session_state.entity_memory,
-            verbose = True,
-        )
+    
 
 st.title("Radiografia Financiera")
 st.subheader("Conoce cómo están tus finanzas!")
@@ -229,8 +224,7 @@ else:
 st.write('---')
 
 if st.session_state["fintoc_data"] is not None:
-    langchain_agent_chain = initialize_langchain_agent()
-    st.session_state["langchain_init"] = True
+    st.session_state["langchain_init"] = initialize_langchain_agent(st.session_state["fintoc_data"], st.secrets["OPENAI_API_KEY"])
 
 def retrieve_data():
     with st.chat_message("assistant"):
@@ -253,13 +247,13 @@ with st.container():
     prompt = st.chat_input("Preguntame algo relacionado a tu situacion financiera...")
     with st.chat_message("assistant"):
         st.write("Hola 👋!, para poder entregarte asesoría financiera, primero debes agregar cuentas")
-        if st.session_state["langchain_init"]:
+        if st.session_state["langchain_init"] is not None:
             st.write("Muy bien! Ya terminé de obtener tu información desde tus bancos.")
             st.write("Partiré con algunos datos interesantes que encontré!")
 
-    if prompt:
-        pandas_ai = initialize_langchain_agent()
-        output = pandas_ai.run(st.session_state["fintoc_data"], prompt)
+    if prompt and st.session_state["langchain_init"] is not None:
+        agent = st.session_state["langchain_init"]
+        output = agent.run(prompt)
         st.session_state.past.append(prompt)  
         st.session_state.generated.append(output) 
         for idx, user_message in enumerate(st.session_state.past):
