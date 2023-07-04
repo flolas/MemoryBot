@@ -2,7 +2,7 @@ from pandasai import PandasAI
 from langchain.agents import Tool
 from langchain.agents import load_tools
 from langchain.agents import AgentType
-from langchain.memory import ConversationSummaryBufferMemory
+from langchain.memory import ConversationBufferMemory
 from langchain.chat_models import ChatOpenAI
 from prompt import PREFIX
 from langchain.utilities import SerpAPIWrapper
@@ -53,9 +53,7 @@ def get_langchain_agent(df, open_api_key):
                                    llm,
                                    agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
                                    verbose=True,
-                                   memory=ConversationSummaryBufferMemory(
-                                        llm=llm, max_token_limit=2048, memory_key="chat_history"
-                                   ),
+                                   memory=ConversationBufferMemory(return_messages=True, memory_key="chat_history"),
                                    agent_kwargs={
                                         'prefix': PREFIX,
                                         'verbose': True,
