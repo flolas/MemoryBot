@@ -57,4 +57,4 @@ def get_langchain_agent(df, open_api_key):
                                     }
                                    )
 
-    return conversational_agent
+    return agent_chain
