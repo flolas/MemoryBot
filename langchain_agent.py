@@ -47,7 +47,7 @@ def get_langchain_agent(df, open_api_key):
             - credit_card_usage_median
         '''
     )
-    tools.append(data_analyst_agent_tool)
+    #tools.append(data_analyst_agent_tool)
 
     agent_chain = initialize_agent(tools,
                                    llm,
@@ -57,7 +57,13 @@ def get_langchain_agent(df, open_api_key):
                                    handle_parsing_errors=True,
                                    max_iterations=5,
                                    agent_kwargs={
-                                            'prefix': PREFIX,
+                                            'prefix': PREFIX + f'''
+DATA:
+{df.to_markdown(index=False)}
+
+TODAY: Jul 3rd, 2023
+
+                                            ''',
                                             'handle_parsing_errors':True,
                                        }
                                    )
