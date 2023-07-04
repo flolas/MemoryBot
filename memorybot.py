@@ -218,7 +218,8 @@ def retrieve_data():
         link_tokens_available = []
         for link_id, link in st.session_state["fintoc_links"].items():
             link_tokens_available.append(link["link_token"])
-
+        if st.session_state["fintoc_data"] is not None:
+            st.session_state["fintoc_data"]  = None
         st.session_state["fintoc_data"] = get_analytical_dataframes(
         fintoc_secret_key =  st.secrets["FINTOC_SECRET_KEY"],
         link_tokens = link_tokens_available,
