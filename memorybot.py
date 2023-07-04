@@ -228,7 +228,7 @@ else:
     st.write("No tienes ninguna cuenta conectada.")
 st.write('---')
 
-if st.session_state["fintoc_data"]:
+if st.session_state["fintoc_data"] is not None:
     langchain_agent_chain = initialize_langchain_agent()
     st.session_state["langchain_init"] = True
 
