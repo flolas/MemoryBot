@@ -56,7 +56,10 @@ def get_langchain_agent(df, open_api_key):
                                    memory=ConversationBufferMemory(return_messages=True, memory_key="chat_history"),
                                    handle_parsing_errors=True,
                                    max_iterations=5,
-                                   prefix = PREFIX,
+                                   agent_kwargs={
+                                            prefix = PREFIX,
+                                            handle_parsing_errors=True,
+                                       }
                                    )
 
     return agent_chain
