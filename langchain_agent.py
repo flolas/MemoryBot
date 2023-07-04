@@ -7,6 +7,9 @@ from langchain.chat_models import ChatOpenAI
 from prompt import PREFIX
 from langchain.utilities import SerpAPIWrapper
 from langchain.agents import initialize_agent
+from langchain.callbacks import StreamlitCallbackHandler
+
+import streamlit as st
 
 import pandasai.llm.openai as pandasai_oa
 
@@ -48,11 +51,14 @@ def get_langchain_agent(df, open_api_key):
         '''
     )
     tools.append(data_analyst_agent_tool)
+    
+    st_callback = StreamlitCallbackHandler(st.container())
 
     agent_chain = initialize_agent(tools,
                                    llm,
                                    agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
                                    verbose=True,
+                                   callbacks=[st_callback],
                                    memory=ConversationBufferMemory(return_messages=True, memory_key="chat_history"),
                                    handle_parsing_errors="Check your output and make sure it conforms!",
                                    max_iterations=5,
