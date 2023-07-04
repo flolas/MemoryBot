@@ -240,7 +240,7 @@ with st.container():
 
     if prompt and st.session_state["langchain_init"] is not None:
         agent = st.session_state["langchain_init"]
-        output = agent.run(prompt, callbacks=[st_callback])
+        output = agent.run(prompt)
         st.session_state.past.append(prompt)  
         st.session_state.generated.append(output) 
 
