@@ -50,7 +50,7 @@ def get_langchain_agent(df, open_api_key):
     #tools.append(data_analyst_agent_tool)
     user = df.reset_index().loc[df.reset_index().year_month.idxmax()].to_dict()
     user['username'] = 'un usuario'
-    user_brief = f'''Te escribirá {username}, tiene una renta mensual de ${user['income_median']}, además todos los meses paga ${user['loan_monthly_payments_median']} en créditos. 
+    user_brief = f'''Te escribirá {user['username']}, tiene una renta mensual de ${user['income_median']}, además todos los meses paga ${user['loan_monthly_payments_median']} en créditos. 
     Su gasto típico de ${user['expenses_median']}, de los cuales ${user['credit_card_usage_median']} son de la tarjeta de crédito y su ahorro típico de ${user['savings_median']}'''
 
     agent_chain = initialize_agent(tools,
