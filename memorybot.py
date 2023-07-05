@@ -228,8 +228,8 @@ def retrieve_data():
         )
 st.button("Terminé de agregar bancos", disabled = len(st.session_state["fintoc_links"]) == 0, on_click = retrieve_data)
 if debug:
-    st.write("Se calcularon los siguientes datos")
-    st.session_state["fintoc_data"]
+    st.write("DataFrame:")
+    st.data_editor(st.session_state["fintoc_data"])
 with st.container():
     prompt = st.chat_input("Preguntame algo relacionado a tu situacion financiera...")
     with st.chat_message("assistant"):
