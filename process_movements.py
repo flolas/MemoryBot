@@ -336,7 +336,7 @@ def get_analytical_dataframes(fintoc_secret_key, link_tokens, since, until):
         'spendings_median',
         'savings_median',
         'income_median',
-        'loans_payments_median',
+        'loan_monthly_payments_median',
         'credit_card_usage_median',
     ]
     

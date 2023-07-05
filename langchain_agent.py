@@ -43,11 +43,15 @@ def get_langchain_agent(df, open_api_key):
             - spendings_median
             - savings_median
             - income_median
-            - mortgage_median
+            - loan_monthly_payments_median
             - credit_card_usage_median
         '''
     )
     #tools.append(data_analyst_agent_tool)
+    user = df.reset_index().loc[df.reset_index().year_month.idxmax()].to_dict()
+    user['username'] = 'un usuario'
+    user_brief = f'''Te escribirá {username}, tiene una renta mensual de ${user['income_median']}, además todos los meses paga ${user['loan_monthly_payments_median']} en créditos. 
+    Su gasto típico de ${user['expenses_median']}, de los cuales ${user['credit_card_usage_median']} son de la tarjeta de crédito y su ahorro típico de ${user['savings_median']}'''
 
     agent_chain = initialize_agent(tools,
                                    llm,
@@ -57,13 +61,7 @@ def get_langchain_agent(df, open_api_key):
                                    handle_parsing_errors=True,
                                    max_iterations=5,
                                    agent_kwargs={
-                                            'prefix': PREFIX + f'''
-DATA:
-{df.to_markdown(index=False)}
-
-TODAY: Jul 3rd, 2023
-
-                                            ''',
+                                            'system_message': PREFIX +f'''\nTODAY: Jul 4rd, 2023\n{user_brief}''',
                                             'handle_parsing_errors':True,
                                        }
                                    )
